@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.6</TargetFramework>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Description>Base domain classes.</Description>
+    <Copyright>Miracle Devs</Copyright>
+    <PackageProjectUrl>http://www.miracledevs.com</PackageProjectUrl>
+    <Authors>Miracle Devs</Authors>
+    <Company>Miracle Devs</Company>
+    <PackageLicenseUrl>https://github.com/MiracleDevs/Paradigm.Services/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageIconUrl>https://avatars2.githubusercontent.com/u/8192926</PackageIconUrl>
+    <RepositoryUrl>https://github.com/MiracleDevs/Paradigm.Services.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Runtime.Serialization.Formatters" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Paradigm.Services.Exceptions\Paradigm.Services.Exceptions.csproj" />
+    <ProjectReference Include="..\Paradigm.Services.Interfaces\Paradigm.Services.Interfaces.csproj" />
+  </ItemGroup>
+
+</Project>

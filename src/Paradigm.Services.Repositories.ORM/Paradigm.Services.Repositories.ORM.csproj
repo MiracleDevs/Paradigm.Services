@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.6</TargetFramework>
+    <Description>Miracle Devs ORM implementation of Paradigm repositories.</Description>
+    <PackageProjectUrl>http://www.miracledevs.com</PackageProjectUrl>
+    <Copyright>Miracle Devs</Copyright>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Authors>Miracle Devs</Authors>
+    <Company>Miracle Devs</Company>
+    <PackageLicenseUrl>https://github.com/MiracleDevs/Paradigm.Services/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageIconUrl>https://avatars2.githubusercontent.com/u/8192926</PackageIconUrl>
+    <RepositoryUrl>https://github.com/MiracleDevs/Paradigm.Services.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Paradigm.Core.DependencyInjection" Version="1.0.1" />
+    <PackageReference Include="Paradigm.ORM.Data" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Paradigm.Services.Domain\Paradigm.Services.Domain.csproj" />
+    <ProjectReference Include="..\Paradigm.Services.Repositories\Paradigm.Services.Repositories.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,35 @@
+using System;
+using System.Collections.Generic;
+using Paradigm.Services.Domain;
+using Paradigm.Services.Interfaces;
+
+namespace Paradigm.Services.Providers
+{
+    public partial interface IEditProvider<TInterface, TDomain, TView, in TId> : IReadProvider<TView, TId>
+        where TInterface : IDomainInterface
+        where TDomain : DomainBase<TInterface, TDomain>, TInterface, new()
+        where TView : DomainBase
+    {
+        List<TDomain> FindEntity();
+
+        TDomain GetEntity(TId id);
+
+        TDomain Add(TInterface contract);
+
+        IEnumerable<Tuple<TDomain, TInterface>> Add(IEnumerable<TInterface> contracts);
+
+        TDomain Edit(TInterface contract, TId id);
+
+        IEnumerable<Tuple<TDomain, TInterface>> Edit(IEnumerable<TInterface> contracts, Func<TInterface, TId> getByIdPredicate);
+
+        void Remove(TId id);
+
+        void Remove(IEnumerable<TId> ids);
+
+        TDomain Save(TInterface contract, TId id);
+
+        TView Save(TInterface contract, Func<TInterface, TId> getByIdPredicate);
+
+        IEnumerable<Tuple<TDomain, TInterface>> Save(IEnumerable<TInterface> contracts, Func<TInterface, TId> getByIdPredicate);
+    }
+}

@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.6</TargetFramework>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Copyright>Miracle Devs</Copyright>
+    <PackageProjectUrl>https://www.Paradigm.com</PackageProjectUrl>
+    <Description>Base library for mvc and api .net core sites.
+If you are using either EF or ORM check the specific implementations as well.
+- Paradigm.Services.Mvc.ORM
+- Paradigm.Services.Mvc.EntityFramework</Description>
+    <Authors>Miracle Devs</Authors>
+    <Company>Miracle Devs</Company>
+    <PackageLicenseUrl>https://github.com/MiracleDevs/Paradigm.Services/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageIconUrl>https://avatars2.githubusercontent.com/u/8192926</PackageIconUrl>
+    <RepositoryUrl>https://github.com/MiracleDevs/Paradigm.Services.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.3" />
+    <PackageReference Include="Paradigm.Core.DependencyInjection" Version="1.0.1" />
+    <PackageReference Include="Paradigm.Core.Extensions" Version="1.0.1" />
+    <PackageReference Include="Paradigm.Core.Logging" Version="1.0.1" />
+    <PackageReference Include="Paradigm.Core.Mapping" Version="1.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Paradigm.Services.Domain\Paradigm.Services.Domain.csproj" />
+    <ProjectReference Include="..\Paradigm.Services.Exceptions\Paradigm.Services.Exceptions.csproj" />
+    <ProjectReference Include="..\Paradigm.Services.Interfaces\Paradigm.Services.Interfaces.csproj" />
+    <ProjectReference Include="..\Paradigm.Services.Providers\Paradigm.Services.Providers.csproj" />
+    <ProjectReference Include="..\Paradigm.Services.Repositories\Paradigm.Services.Repositories.csproj" />
+    <ProjectReference Include="..\Paradigm.Services.WorkingTasks\Paradigm.Services.WorkingTasks.csproj" />
+  </ItemGroup>
+
+</Project>

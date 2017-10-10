@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.6</TargetFramework>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageProjectUrl>http://www.miracledevs.com</PackageProjectUrl>
+    <Copyright>Miracle Devs</Copyright>
+    <Description>Contains all the base classes and interface to create state machines. Paradigm uses state machines withitn domain objects to validate domain relations and transitions.</Description>
+    <Authors>Miracle Devs</Authors>
+    <Company>Miracle Devs</Company>
+    <PackageLicenseUrl>https://github.com/MiracleDevs/Paradigm.Services/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageIconUrl>https://avatars2.githubusercontent.com/u/8192926</PackageIconUrl>
+    <RepositoryUrl>https://github.com/MiracleDevs/Paradigm.Services.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+  </PropertyGroup>
+
+</Project>

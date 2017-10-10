@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.6</TargetFramework>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Description>Specific SQL Server excepcion package including exception matchers for sql exception errors.</Description>
+    <PackageProjectUrl>http://www.miracledevs.com</PackageProjectUrl>
+    <Copyright>Miracle Devs</Copyright>
+    <Authors>Miracle Devs</Authors>
+    <Company>Miracle Devs</Company>
+    <PackageLicenseUrl>https://github.com/MiracleDevs/Paradigm.Services/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageIconUrl>https://avatars2.githubusercontent.com/u/8192926</PackageIconUrl>
+    <RepositoryUrl>https://github.com/MiracleDevs/Paradigm.Services.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Data.SqlClient" Version="4.3.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Paradigm.Services.Exceptions\Paradigm.Services.Exceptions.csproj" />
+  </ItemGroup>
+
+</Project>
