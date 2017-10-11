@@ -46,7 +46,7 @@ namespace Paradigm.Services.Mvc.Middlewares
 
                 if (logging != null)
                 {
-                    await logging.LogAsync($"[{elapsed}ms] - Incoming request to {context.Request.Path.Value}");
+                    await logging.LogAsync($"[{elapsed}ms] - Incoming request to {context.Request.Path.Value} from IPv4='{context.Connection.RemoteIpAddress.MapToIPv4()}' IPv6='{context.Connection.RemoteIpAddress.MapToIPv6()}'");
                 }
             }
             catch
