@@ -20,3 +20,14 @@
 
 # Paradigm.Services
 Base libraries for service and webapi projects, containing support for different data sources, state machines and more.
+
+
+Change log
+---
+
+Version `2.0.0`
+- Updated .net core from version 1 to version 2.
+
+Version `1.0.0`
+- Uploaded first version of the Paradigm Service Libraries.
+
