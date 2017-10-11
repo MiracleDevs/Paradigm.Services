@@ -5,7 +5,6 @@ using Paradigm.Services.Exceptions;
 using Paradigm.Services.Providers;
 using Paradigm.Services.Repositories.UOW;
 using Paradigm.Services.WorkingTasks;
-using Paradigm.Services.WorkingTasks.ORM;
 
 namespace Paradigm.Services.Mvc.ORM.Controllers
 {

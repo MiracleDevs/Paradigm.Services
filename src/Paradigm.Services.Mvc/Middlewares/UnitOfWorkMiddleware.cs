@@ -1,11 +1,8 @@
 using System;
-using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
-using Paradigm.Services.Exceptions;
 using Paradigm.Services.Repositories.UOW;
-using Newtonsoft.Json;
 
 namespace Paradigm.Services.Mvc.Middlewares
 {
@@ -13,27 +10,27 @@ namespace Paradigm.Services.Mvc.Middlewares
     {
         #region Properties
 
-        public RequestDelegate Next { get; }
+        private IServiceProvider ServiceProvider { get; }
 
         #endregion
 
         #region Constructor
 
-        public UnitOfWorkMiddleware(RequestDelegate next)
+        public UnitOfWorkMiddleware(IServiceProvider serviceProvider)
         {
-            this.Next = next;
+            this.ServiceProvider = serviceProvider;
         }
 
         #endregion
 
         #region Public Methods
 
-        public async Task Invoke(HttpContext context, IServiceProvider serviceProvider)
+        public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
-            var unitOfWork = serviceProvider.GetService<IUnitOfWork>();
+            var unitOfWork = this.ServiceProvider.GetService<IUnitOfWork>();
 
-            await this.Next.Invoke(context);
-            
+            await next.Invoke(context);
+
             unitOfWork.Reset();
         }
 

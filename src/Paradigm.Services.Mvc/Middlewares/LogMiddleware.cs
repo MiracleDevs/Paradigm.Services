@@ -10,28 +10,28 @@ namespace Paradigm.Services.Mvc.Middlewares
     {
         #region Properties
 
-        public RequestDelegate Next { get; }
+        private IServiceProvider ServiceProvider { get; }
 
         #endregion
 
         #region Constructor
 
-        public LogMiddleware(RequestDelegate next)
+        public LogMiddleware(IServiceProvider serviceProvider)
         {
-            this.Next = next;
+            this.ServiceProvider = serviceProvider;
         }
 
         #endregion
 
         #region Public Methods
 
-        public async Task Invoke(HttpContext context, IServiceProvider serviceProvider)
+        public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
             var start = DateTime.Now;
-            await this.Next.Invoke(context);
+            await next.Invoke(context);
             var end = DateTime.Now;
 
-            await LogAsync(end.Subtract(start).TotalMilliseconds, context, serviceProvider);
+            await LogAsync(end.Subtract(start).TotalMilliseconds, context, this.ServiceProvider);
         }
 
         #endregion

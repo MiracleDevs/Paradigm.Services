@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Paradigm.Services.Interfaces;
 using Paradigm.Services.Interfaces.Attributes;
 
 namespace Paradigm.Services.Interfaces.Validations

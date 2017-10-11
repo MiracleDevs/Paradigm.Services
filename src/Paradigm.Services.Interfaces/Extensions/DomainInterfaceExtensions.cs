@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Paradigm.Services.Interfaces;
 using Paradigm.Services.Interfaces.Validations;
 
 namespace Paradigm.Services.Interfaces.Extensions

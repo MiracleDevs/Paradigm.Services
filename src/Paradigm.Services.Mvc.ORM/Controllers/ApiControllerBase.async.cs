@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Paradigm.Services.WorkingTasks;
-using Paradigm.Services.WorkingTasks.ORM;
 
 namespace Paradigm.Services.Mvc.ORM.Controllers
 {

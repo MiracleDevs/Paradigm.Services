@@ -30,30 +30,30 @@ namespace Paradigm.Services.Mvc.Middlewares
 
         #region Properties
 
-        public RequestDelegate Next { get; }
+        private IServiceProvider ServiceProvider { get; }
 
         #endregion
 
         #region Constructor
 
-        public ExceptionHandlerMiddleware(RequestDelegate next)
+        public ExceptionHandlerMiddleware(IServiceProvider serviceProvider)
         {
-            this.Next = next;
+            this.ServiceProvider = serviceProvider;
         }
 
         #endregion
 
         #region Public Methods
 
-        public async Task Invoke(HttpContext context, IServiceProvider serviceProvider)
+        public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
             try
             {
-                await this.Next(context);
+                await next(context);
             }
             catch (Exception ex)
             {
-                await LogAsync(serviceProvider, ex);
+                await LogAsync(this.ServiceProvider, ex);
                 await HandleExceptionAsync(context, ex);
             }
         }
