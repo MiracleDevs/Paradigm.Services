@@ -19,9 +19,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paradigm.Services.Repositor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paradigm.Services.Repositories.EntityFramework", "Paradigm.Services.Repositories.EntityFramework\Paradigm.Services.Repositories.EntityFramework.csproj", "{13C606EF-B68D-455B-9AAC-6CD5A1499A37}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Framework", "Framework", "{E73319A5-FD2E-4194-87C6-C933748FFE28}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "00.Services", "00.Services", "{E73319A5-FD2E-4194-87C6-C933748FFE28}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B01F0173-3FAF-48D2-92C6-53AEFFA0A23B}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03.Tests", "03.Tests", "{B01F0173-3FAF-48D2-92C6-53AEFFA0A23B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paradigm.Services.Repositories.ORM", "Paradigm.Services.Repositories.ORM\Paradigm.Services.Repositories.ORM.csproj", "{48F3C623-B493-4E84-8A76-A7BD836204D8}"
 EndProject
@@ -35,9 +35,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paradigm.Services.Mvc.ORM",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paradigm.Services.Mvc", "Paradigm.Services.Mvc\Paradigm.Services.Mvc.csproj", "{0A28969F-A089-4393-A08B-0D94D2C75879}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Framework.ORM", "Framework.ORM", "{98E3C523-81F9-4BF8-A4CE-832E6FE553F5}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01.ORM", "01.ORM", "{98E3C523-81F9-4BF8-A4CE-832E6FE553F5}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Framework.EntityFramework", "Framework.EntityFramework", "{EE42E4A7-D075-4540-A0E0-9C1EA1763B61}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02.EntityFramework", "02.EntityFramework", "{EE42E4A7-D075-4540-A0E0-9C1EA1763B61}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paradigm.Services.Tests", "Paradigm.Services.Tests\Paradigm.Services.Tests.csproj", "{39976A74-AD47-4D1F-9D75-25831599F70C}"
 EndProject
