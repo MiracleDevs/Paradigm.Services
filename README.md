@@ -25,6 +25,14 @@ Base libraries for service and webapi projects, containing support for different
 Change log
 ---
 
+Version `2.0.3`
+- Changed the ORM middleware to use configuration instead of configuration root,
+  and added specific exceptions.
+
+Version `2.0.2`
+- Changed middleware due to problems utilizing the core interface.
+- Fixed an error with an static method calling the wrong middleware.
+
 Version `2.0.1`
 - Updated Paradigm.Core to version `2.0.1`.
 

@@ -4,6 +4,7 @@
 * Licensed under MIT(https://github.com/MiracleDevs/Paradigm.Services/blob/master/LICENSE)
 */
 
+using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
@@ -27,10 +28,10 @@ namespace Paradigm.Services.Mvc.ORM.Middlewares
 
         public override async Task Invoke(HttpContext context)
         {
-            var configuration = context.RequestServices.GetService<IConfigurationRoot>();
-            var connector = context.RequestServices.GetService<IDatabaseConnector>();
+            var configuration = context.RequestServices.GetService<IConfiguration>() ?? throw new Exception("Can not resolve a configuration object. Paradigm ORM requires a connection string.");
+            var connector = context.RequestServices.GetService<IDatabaseConnector>() ?? throw new Exception("Can not resolve the database connector. Paradigm ORM can not connect.");
 
-            connector.Initialize(configuration["Database:ConnectionString"]);
+            connector.Initialize(configuration["Database:ConnectionString"] ?? throw new Exception("Can not find 'Database:ConnectionString' in the configuration object."));
 
             await connector.OpenAsync();
             await this.Next.Invoke(context);
