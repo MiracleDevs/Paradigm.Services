@@ -5,11 +5,12 @@
 */
 
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
-namespace Paradigm.Services.Repositories.UOW
+namespace Paradigm.Services.Mvc.Middlewares
 {
-    public partial interface IUnitOfWork
+    public interface IMiddleware
     {
-        Task CommitChangesAsync();
+        Task Invoke(HttpContext context);
     }
 }

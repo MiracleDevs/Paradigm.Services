@@ -1,39 +1,39 @@
-﻿using System;
+﻿/*!
+* Paradigm Framework - Service Libraries
+* Copyright(c) 2017 Miracle Devs, Inc
+* Licensed under MIT(https://github.com/MiracleDevs/Paradigm.Services/blob/master/LICENSE)
+*/
+
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Paradigm.ORM.Data.Database;
+using Paradigm.Services.Mvc.Middlewares;
 
 namespace Paradigm.Services.Mvc.ORM.Middlewares
 {
-    public class OrmDatabaseMiddleware : IMiddleware
+    public class OrmDatabaseMiddleware : MiddlewareBase
     {
-        #region Properties
-
-        private IServiceProvider ServiceProvider { get; }
-
-        #endregion
-
         #region Constructor
 
-        public OrmDatabaseMiddleware(IServiceProvider serviceProvider)
+        public OrmDatabaseMiddleware(RequestDelegate next): base(next)
         {
-            this.ServiceProvider = serviceProvider;
         }
 
         #endregion
 
         #region Public Methods
 
-        public async Task InvokeAsync(HttpContext context, RequestDelegate next)
+        public override async Task Invoke(HttpContext context)
         {
-            var configuration = this.ServiceProvider.GetService<IConfigurationRoot>();
-            var connector = this.ServiceProvider.GetService<IDatabaseConnector>();
+            var configuration = context.RequestServices.GetService<IConfigurationRoot>();
+            var connector = context.RequestServices.GetService<IDatabaseConnector>();
+
             connector.Initialize(configuration["Database:ConnectionString"]);
 
             await connector.OpenAsync();
-            await next.Invoke(context);
+            await this.Next.Invoke(context);
             await connector.CloseAsync();
         }
 

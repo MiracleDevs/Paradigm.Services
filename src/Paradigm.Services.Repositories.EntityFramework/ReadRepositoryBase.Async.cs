@@ -1,4 +1,10 @@
-﻿using System.Collections.Generic;
+﻿/*!
+* Paradigm Framework - Service Libraries
+* Copyright(c) 2017 Miracle Devs, Inc
+* Licensed under MIT(https://github.com/MiracleDevs/Paradigm.Services/blob/master/LICENSE)
+*/
+
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 

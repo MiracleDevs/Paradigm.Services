@@ -1,4 +1,10 @@
-﻿using System;
+﻿/*!
+* Paradigm Framework - Service Libraries
+* Copyright(c) 2017 Miracle Devs, Inc
+* Licensed under MIT(https://github.com/MiracleDevs/Paradigm.Services/blob/master/LICENSE)
+*/
+
+using System;
 using System.Net;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
@@ -10,7 +16,7 @@ using Paradigm.Core.Logging;
 
 namespace Paradigm.Services.Mvc.Middlewares
 {
-    public class ExceptionHandlerMiddleware: IMiddleware
+    public class ExceptionHandlerMiddleware : MiddlewareBase
     {
         #region Nested Types
 
@@ -28,32 +34,26 @@ namespace Paradigm.Services.Mvc.Middlewares
 
         #endregion
 
-        #region Properties
-
-        private IServiceProvider ServiceProvider { get; }
-
-        #endregion
 
         #region Constructor
 
-        public ExceptionHandlerMiddleware(IServiceProvider serviceProvider)
+        public ExceptionHandlerMiddleware(RequestDelegate next): base(next)
         {
-            this.ServiceProvider = serviceProvider;
         }
 
         #endregion
 
         #region Public Methods
 
-        public async Task InvokeAsync(HttpContext context, RequestDelegate next)
+        public override async Task Invoke(HttpContext context)
         {
             try
             {
-                await next(context);
+                await this.Next(context);
             }
             catch (Exception ex)
             {
-                await LogAsync(this.ServiceProvider, ex);
+                await LogAsync(context.RequestServices, ex);
                 await HandleExceptionAsync(context, ex);
             }
         }
@@ -66,14 +66,18 @@ namespace Paradigm.Services.Mvc.Middlewares
         {
             var code = HttpStatusCode.InternalServerError;
 
-            if (exception is NotFoundException)
-                code = HttpStatusCode.NotFound;
-
-            else if (exception is AuthenticationException)
-                code = HttpStatusCode.Unauthorized;
-
-            else if (exception is AuthorizationException)
-                code = HttpStatusCode.Forbidden;
+            switch (exception)
+            {
+                case NotFoundException _:
+                    code = HttpStatusCode.NotFound;
+                    break;
+                case AuthenticationException _:
+                    code = HttpStatusCode.Unauthorized;
+                    break;
+                case AuthorizationException _:
+                    code = HttpStatusCode.Forbidden;
+                    break;
+            }
 
             var result = JsonConvert.SerializeObject(new Error(exception.Message));
             context.Response.ContentType = "application/json";

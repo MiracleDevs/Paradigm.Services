@@ -1,3 +1,9 @@
+/*!
+* Paradigm Framework - Service Libraries
+* Copyright(c) 2017 Miracle Devs, Inc
+* Licensed under MIT(https://github.com/MiracleDevs/Paradigm.Services/blob/master/LICENSE)
+*/
+
 using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -6,43 +12,36 @@ using Paradigm.Core.Logging;
 
 namespace Paradigm.Services.Mvc.Middlewares
 {
-    public class LogMiddleware : IMiddleware
+    public class LogMiddleware : MiddlewareBase
     {
-        #region Properties
-
-        private IServiceProvider ServiceProvider { get; }
-
-        #endregion
-
         #region Constructor
 
-        public LogMiddleware(IServiceProvider serviceProvider)
+        public LogMiddleware(RequestDelegate next): base(next)
         {
-            this.ServiceProvider = serviceProvider;
         }
 
         #endregion
 
         #region Public Methods
 
-        public async Task InvokeAsync(HttpContext context, RequestDelegate next)
+        public override async Task Invoke(HttpContext context)
         {
             var start = DateTime.Now;
-            await next.Invoke(context);
+            await this.Next.Invoke(context);
             var end = DateTime.Now;
 
-            await LogAsync(end.Subtract(start).TotalMilliseconds, context, this.ServiceProvider);
+            await LogAsync(end.Subtract(start).TotalMilliseconds, context);
         }
 
         #endregion
 
         #region Private Methods    
 
-        private static async Task LogAsync(double elapsed, HttpContext context, IServiceProvider serviceProvider)
+        private static async Task LogAsync(double elapsed, HttpContext context)
         {
             try
             {
-                var logging = serviceProvider.GetService<ILogging>();
+                var logging = context.RequestServices.GetService<ILogging>();
 
                 if (logging != null)
                 {

@@ -1,4 +1,9 @@
-using System;
+/*!
+* Paradigm Framework - Service Libraries
+* Copyright(c) 2017 Miracle Devs, Inc
+* Licensed under MIT(https://github.com/MiracleDevs/Paradigm.Services/blob/master/LICENSE)
+*/
+
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
@@ -6,30 +11,23 @@ using Paradigm.Services.Repositories.UOW;
 
 namespace Paradigm.Services.Mvc.Middlewares
 {
-    public class UnitOfWorkMiddleware : IMiddleware
+    public class UnitOfWorkMiddleware : MiddlewareBase
     {
-        #region Properties
-
-        private IServiceProvider ServiceProvider { get; }
-
-        #endregion
-
         #region Constructor
 
-        public UnitOfWorkMiddleware(IServiceProvider serviceProvider)
+        public UnitOfWorkMiddleware(RequestDelegate next): base(next)
         {
-            this.ServiceProvider = serviceProvider;
         }
 
         #endregion
 
         #region Public Methods
 
-        public async Task InvokeAsync(HttpContext context, RequestDelegate next)
+        public override async Task Invoke(HttpContext context)
         {
-            var unitOfWork = this.ServiceProvider.GetService<IUnitOfWork>();
+            var unitOfWork = context.RequestServices.GetService<IUnitOfWork>();
 
-            await next.Invoke(context);
+            await this.Next.Invoke(context);
 
             unitOfWork.Reset();
         }

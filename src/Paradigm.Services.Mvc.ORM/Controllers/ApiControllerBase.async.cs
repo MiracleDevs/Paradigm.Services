@@ -1,4 +1,10 @@
-﻿using System;
+﻿/*!
+* Paradigm Framework - Service Libraries
+* Copyright(c) 2017 Miracle Devs, Inc
+* Licensed under MIT(https://github.com/MiracleDevs/Paradigm.Services/blob/master/LICENSE)
+*/
+
+using System;
 using System.Threading.Tasks;
 using Paradigm.Services.WorkingTasks;
 
@@ -6,7 +12,6 @@ namespace Paradigm.Services.Mvc.ORM.Controllers
 {
     public abstract partial class ApiControllerBase
     {
-
         #region Protected Methods
 
         protected async Task TaskAsync(Func<Task> action, int repeat = 0, TimeSpan? waitBeforeRepeat = null)
