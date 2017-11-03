@@ -31,6 +31,8 @@ namespace Paradigm.Services.Providers
             
             this.BeforeCreate(entity, contract);
             await this.BeforeCreateAsync(entity, contract);
+            this.BeforeSave(entity, contract);
+            await this.BeforeSaveAsync(entity, contract);
 
             entity.MapFrom(contract);
             await this.GetDomainRepository().AddAsync(entity);
@@ -38,6 +40,8 @@ namespace Paradigm.Services.Providers
 
             this.AfterCreate(entity, contract);
             await this.AfterCreateAsync(entity, contract);
+            this.AfterSave(entity, contract);
+            await this.AfterSaveAsync(entity, contract);
 
             return entity;
         }
@@ -53,6 +57,8 @@ namespace Paradigm.Services.Providers
 
                 this.BeforeCreate(entity, contract);
                 await this.BeforeCreateAsync(entity, contract);
+                this.BeforeSave(entity, contract);
+                await this.BeforeSaveAsync(entity, contract);
 
                 entity.MapFrom(contract);
                 entities.Add(new Tuple<TDomain, TInterface>(entity, contract));
@@ -65,6 +71,8 @@ namespace Paradigm.Services.Providers
             {
                 this.AfterCreate(entity.Item1, entity.Item2);
                 await this.AfterCreateAsync(entity.Item1, entity.Item2);
+                this.AfterSave(entity.Item1, entity.Item2);
+                await this.AfterSaveAsync(entity.Item1, entity.Item2);
             }
 
             return entities;
@@ -77,6 +85,8 @@ namespace Paradigm.Services.Providers
 
             this.BeforeEdit(entity, contract);
             await this.BeforeEditAsync(entity, contract);
+            this.BeforeSave(entity, contract);
+            await this.BeforeSaveAsync(entity, contract);
 
             entity.MapFrom(contract);
             await repository.EditAsync(entity);
@@ -84,6 +94,8 @@ namespace Paradigm.Services.Providers
 
             this.AfterEdit(entity, contract);
             await this.AfterEditAsync(entity, contract);
+            this.AfterSave(entity, contract);
+            await this.AfterSaveAsync(entity, contract);
 
             return entity;
         }
@@ -99,6 +111,8 @@ namespace Paradigm.Services.Providers
 
                 this.BeforeEdit(entity, contract);
                 await this.BeforeEditAsync(entity, contract);
+                this.BeforeSave(entity, contract);
+                await this.BeforeSaveAsync(entity, contract);
 
                 entity.MapFrom(contract);
                 entities.Add(new Tuple<TDomain, TInterface>(entity, contract));
@@ -111,6 +125,8 @@ namespace Paradigm.Services.Providers
             {
                 this.AfterEdit(entity.Item1, entity.Item2);
                 await this.AfterEditAsync(entity.Item1, entity.Item2);
+                this.AfterSave(entity.Item1, entity.Item2);
+                await this.AfterSaveAsync(entity.Item1, entity.Item2);
             }
 
             return entities;
@@ -238,6 +254,16 @@ namespace Paradigm.Services.Providers
         }
 
         protected virtual Task AfterEditAsync(TDomain entity, TInterface contract)
+        {
+            return System.Threading.Tasks.Task.FromResult(default(object));
+        }
+
+        protected virtual Task BeforeSaveAsync(TDomain entity, TInterface contract)
+        {
+            return System.Threading.Tasks.Task.FromResult(default(object));
+        }
+
+        protected virtual Task AfterSaveAsync(TDomain entity, TInterface contract)
         {
             return System.Threading.Tasks.Task.FromResult(default(object));
         }
