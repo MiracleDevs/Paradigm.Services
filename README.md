@@ -24,6 +24,18 @@ Base libraries for service and webapi projects, containing support for different
 
 Change log
 ---
+Version `2.0.4`
+- Added new methods to DomainBase:
+  - BeforeSave: Method called before the entity is added or edited.
+  - AfterSave: Method called after the entity has been added or edited.
+
+- Added new methods to EditProviderBase:
+  - BeforeSave, BeforeSaveAsync: Methods called before the entity is added or edited.
+  - AfterSave, AfterSaveAsync: Methods called after the entity has been added or edited.
+
+  Is also worth mentioning that both async and sync methods are called in async and sync conditions.
+
+- Added a new edit provider that works only with a domain entity instead of having both domain and view. This ideal for simple case scenarios, or when using cassandra connector without materialized views.
 
 Version `2.0.3`
 - Changed the ORM middleware to use configuration instead of configuration root,
