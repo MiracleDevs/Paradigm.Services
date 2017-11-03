@@ -21,10 +21,10 @@ If you are using either EF or ORM check the specific implementations as well.
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.0.0" />
-    <PackageReference Include="Paradigm.Core.DependencyInjection" Version="2.0.1" />
-    <PackageReference Include="Paradigm.Core.Extensions" Version="2.0.1" />
-    <PackageReference Include="Paradigm.Core.Logging" Version="2.0.1" />
-    <PackageReference Include="Paradigm.Core.Mapping" Version="2.0.1" />
+    <PackageReference Include="Paradigm.Core.DependencyInjection" Version="2.0.2" />
+    <PackageReference Include="Paradigm.Core.Extensions" Version="2.0.2" />
+    <PackageReference Include="Paradigm.Core.Logging" Version="2.0.2" />
+    <PackageReference Include="Paradigm.Core.Mapping" Version="2.0.2" />
   </ItemGroup>
 
   <ItemGroup>
