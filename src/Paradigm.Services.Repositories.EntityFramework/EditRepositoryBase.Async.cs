@@ -79,8 +79,10 @@ namespace Paradigm.Services.Repositories.EntityFramework
                 throw new ArgumentNullException(nameof(entity));
 
             entity.BeforeAdd();
+            entity.BeforeSave();
             await this.Context.Set<TOtherEntity>().AddAsync(entity);
             entity.AfterAdd();
+            entity.AfterSave();
         }
 
         #endregion

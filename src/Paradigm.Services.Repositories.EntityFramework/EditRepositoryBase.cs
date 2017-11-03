@@ -90,8 +90,10 @@ namespace Paradigm.Services.Repositories.EntityFramework
                 throw new ArgumentNullException(nameof(entity));
 
             entity.BeforeAdd();
+            entity.BeforeSave();
             this.Context.Set<TOtherEntity>().Add(entity);
             entity.AfterAdd();
+            entity.AfterSave();
         }
 
         protected void EditEntity<TOtherEntity>(TOtherEntity entity) where TOtherEntity : DomainBase
@@ -99,7 +101,8 @@ namespace Paradigm.Services.Repositories.EntityFramework
             if (entity == null)
                 throw new ArgumentNullException(nameof(entity));
 
-            entity.BeforeEdit();           
+            entity.BeforeEdit();       
+            entity.BeforeSave();
             var entityEntry = this.GetEntityEntry(entity);
 
             if (entityEntry != null && entityEntry.State == EntityState.Detached)
@@ -109,6 +112,7 @@ namespace Paradigm.Services.Repositories.EntityFramework
             }
 
             entity.AfterEdit();
+            entity.AfterSave();
         }
 
         protected void RemoveEntity<TOtherEntity>(TOtherEntity entity) where TOtherEntity : DomainBase

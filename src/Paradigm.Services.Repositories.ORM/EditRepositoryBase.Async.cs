@@ -15,8 +15,10 @@ namespace Paradigm.Services.Repositories.ORM
         public virtual async Task AddAsync(TEntity entity)
         {
             entity.BeforeAdd();
+            entity.BeforeSave();
             await this.DatabaseAccess.InsertAsync(entity);
             entity.AfterAdd();
+            entity.AfterSave();
         }
 
         public virtual async Task AddAsync(IEnumerable<TEntity> entities)
@@ -24,20 +26,28 @@ namespace Paradigm.Services.Repositories.ORM
             var entityList = entities as IList<TEntity> ?? entities.ToList();
 
             foreach (var entity in entityList)
+            {
                 entity.BeforeAdd();
+                entity.BeforeSave();
+            }
 
             await this.DatabaseAccess.InsertAsync(entityList);
 
             foreach (var entity in entityList)
+            {
                 entity.AfterAdd();
+                entity.AfterSave();
+            }
 
         }
 
         public virtual async Task EditAsync(TEntity entity)
         {
             entity.BeforeEdit();
+            entity.BeforeSave();
             await this.DatabaseAccess.UpdateAsync(entity);
             entity.AfterEdit();
+            entity.AfterSave();
         }
 
         public virtual async Task EditAsync(IEnumerable<TEntity> entities)
@@ -45,12 +55,18 @@ namespace Paradigm.Services.Repositories.ORM
             var entityList = entities as IList<TEntity> ?? entities.ToList();
 
             foreach (var entity in entityList)
+            {
                 entity.BeforeEdit();
+                entity.BeforeSave();
+            }
 
             await this.DatabaseAccess.UpdateAsync(entityList);
 
             foreach (var entity in entityList)
+            {
                 entity.AfterEdit();
+                entity.AfterSave();
+            }
         }
 
         public virtual async Task RemoveAsync(TEntity entity)

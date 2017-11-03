@@ -51,6 +51,20 @@ namespace Paradigm.Services.Domain
         }
 
         /// <summary>
+        /// Method called by the repository before adding or editing an entity.
+        /// </summary>
+        public virtual void BeforeSave()
+        {
+        }
+
+        /// <summary>
+        /// Method called by the repository after adding or editing an entity.
+        /// </summary>
+        public virtual void AfterSave()
+        {
+        }
+
+        /// <summary>
         /// Method called by the repository before removing an existing entity.
         /// </summary>
         public virtual void BeforeRemove()

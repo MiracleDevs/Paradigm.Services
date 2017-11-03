@@ -29,29 +29,39 @@ namespace Paradigm.Services.Repositories.ORM
 
         public virtual void Add(TEntity entity)
         {
-            entity.BeforeAdd();            
+            entity.BeforeAdd(); 
+            entity.BeforeSave();
             this.DatabaseAccess.Insert(entity);
             entity.AfterAdd();
+            entity.AfterSave();
         }
 
         public virtual void Add(IEnumerable<TEntity> entities)
         {
             var entityList = entities as IList<TEntity> ?? entities.ToList();
 
-            foreach(var entity in entityList)
+            foreach (var entity in entityList)
+            {
                 entity.BeforeAdd();
+                entity.BeforeSave();
+            }
 
             this.DatabaseAccess.Insert(entityList);
 
             foreach (var entity in entityList)
+            {
                 entity.AfterAdd();
+                entity.AfterSave();
+            }
         }
 
         public virtual void Edit(TEntity entity)
         {
             entity.BeforeEdit();
+            entity.BeforeSave();
             this.DatabaseAccess.Update(entity);
             entity.AfterEdit();
+            entity.AfterSave();
         }
 
         public virtual void Edit(IEnumerable<TEntity> entities)
@@ -59,12 +69,18 @@ namespace Paradigm.Services.Repositories.ORM
             var entityList = entities as IList<TEntity> ?? entities.ToList();
 
             foreach (var entity in entityList)
+            {
                 entity.BeforeEdit();
+                entity.BeforeSave();
+            }
 
             this.DatabaseAccess.Update(entityList);
 
             foreach (var entity in entityList)
+            {
                 entity.AfterEdit();
+                entity.AfterSave();
+            }
         }
 
         public virtual void Remove(TEntity entity)
