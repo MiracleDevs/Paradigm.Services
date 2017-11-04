@@ -33,13 +33,14 @@ namespace Paradigm.Services.DependencyInjection.Extensions
         /// Registers the exception handler.
         /// </summary>
         /// <param name="serviceCollection">The service collection.</param>
+        /// <param name="resourceType"></param>
         /// <exception cref="System.ArgumentNullException">serviceCollection</exception>
-        public static void AddExceptionHandler(this IServiceCollection serviceCollection)
+        public static void AddExceptionHandler(this IServiceCollection serviceCollection, Type resourceType)
         {
             if (serviceCollection == null)
                 throw new ArgumentNullException(nameof(serviceCollection));
 
-            serviceCollection.AddScoped<IExceptionHandler, ExceptionHandler>();
+            serviceCollection.AddSingleton<IExceptionHandler>(new ExceptionHandler(resourceType));
         }
 
         /// <summary>

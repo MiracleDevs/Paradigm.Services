@@ -29,15 +29,13 @@ namespace Paradigm.Services.Exceptions
 
         public Exception Handle(Exception ex)
         {
-            var collectionException = ex as CollectionException;
-
-            if (collectionException == null)
+            if (!(ex is CollectionException collectionException))
                 return this.ProcessException(ex) ?? ex;
 
-            foreach(var exception in collectionException.Exceptions)
+            foreach (var exception in collectionException.Exceptions)
             {
                 var result = this.ProcessException(exception);
-                
+
                 if (result != null)
                 {
                     return result;

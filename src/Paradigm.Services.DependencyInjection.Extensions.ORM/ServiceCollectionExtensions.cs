@@ -30,7 +30,7 @@ namespace Paradigm.Services.DependencyInjection.Extensions.ORM
         /// </remarks>
         /// <param name="serviceCollection">The service collection.</param>
         /// <param name="assembly">Optional assembly to use as entry point.</param>
-        public static void AddParadimFramework(this IServiceCollection serviceCollection, Assembly assembly = null)
+        public static void AddParadimFramework(this IServiceCollection serviceCollection, Type exceptionHandlerResourceType, Assembly assembly = null)
         {
             if (serviceCollection == null)
                 throw new ArgumentNullException(nameof(serviceCollection));
@@ -43,6 +43,7 @@ namespace Paradigm.Services.DependencyInjection.Extensions.ORM
             serviceCollection.AddProviders(assembly);
             serviceCollection.AddWorkingTasks(assembly);
             serviceCollection.AddUnitOfWork();
+            serviceCollection.AddExceptionHandler(exceptionHandlerResourceType);
         }
 
         /// <summary>

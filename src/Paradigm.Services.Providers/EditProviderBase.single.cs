@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Extensions.DependencyInjection;
 using Paradigm.Services.Domain;
 using Paradigm.Services.Exceptions;
 using Paradigm.Services.Interfaces;
@@ -19,7 +20,7 @@ namespace Paradigm.Services.Providers
         ProviderBase,
         IEditProvider<TInterface, TDomain, TId>
         where TInterface : IDomainInterface
-        where TDomain : DomainBase<TInterface, TDomain>, TInterface, new()
+        where TDomain : DomainBase<TInterface, TDomain>, TInterface
         where TDomainRepository : IEditRepository<TDomain, TId>
     {
         #region Constructor
@@ -44,7 +45,7 @@ namespace Paradigm.Services.Providers
 
         public virtual TDomain Add(TInterface contract)
         {
-            var entity = new TDomain();
+            var entity = this.GetNewDomainEntity();
 
             this.BeforeCreate(entity, contract);
             this.BeforeCreateAsync(entity, contract).Wait();
@@ -70,7 +71,7 @@ namespace Paradigm.Services.Providers
 
             foreach (var contract in contracts)
             {
-                var entity = new TDomain();
+                var entity = this.GetNewDomainEntity();
 
                 this.BeforeCreate(entity, contract);
                 this.BeforeCreateAsync(entity, contract).Wait();
@@ -205,7 +206,7 @@ namespace Paradigm.Services.Providers
             {
                 if (contract.IsNew())
                 {
-                    var entity = new TDomain();
+                    var entity = this.GetNewDomainEntity();
 
                     this.BeforeCreate(entity, contract);
                     this.BeforeCreateAsync(entity, contract).Wait();
@@ -249,6 +250,11 @@ namespace Paradigm.Services.Providers
         #endregion
 
         #region Protected Methods
+
+        protected virtual TDomain GetNewDomainEntity()
+        {
+            return this.ServiceProvider.GetService<TDomain>() ?? Activator.CreateInstance<TDomain>();    
+        }
 
         protected virtual TDomainRepository GetDomainRepository()
         {

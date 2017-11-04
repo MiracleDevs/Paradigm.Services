@@ -5,6 +5,7 @@ using Paradigm.ORM.Data.Database;
 using Paradigm.ORM.Data.MySql;
 using Paradigm.Services.DependencyInjection.Extensions;
 using Paradigm.Services.DependencyInjection.Extensions.ORM;
+using Paradigm.Services.Exceptions;
 using Paradigm.Services.Repositories.UOW;
 using Paradigm.Services.Tests.Fixtures.Tests;
 
@@ -19,6 +20,7 @@ namespace Paradigm.Services.Tests.Tests.Extensions
             var serviceCollection = new ServiceCollection();
             var entryPoint = typeof(ServiceCollectionExtensionsTest).Assembly;
 
+            serviceCollection.AddScoped<IDatabaseConnector, MySqlDatabaseConnector>();
             serviceCollection.AddDomainObjects(entryPoint);
             serviceCollection.AddDatabaseAccess(entryPoint);
             serviceCollection.AddDatabaseReaderMappers(entryPoint);
@@ -27,8 +29,9 @@ namespace Paradigm.Services.Tests.Tests.Extensions
             serviceCollection.AddProviders(entryPoint);        
             serviceCollection.AddWorkingTasks(entryPoint);
             serviceCollection.AddUnitOfWork();
+            serviceCollection.AddExceptionHandler(typeof(Fixtures.Tests.Exceptions));
 
-            serviceCollection.Count.Should().Be(15);
+            serviceCollection.Count.Should().Be(17);
         }
 
         [TestCase]
@@ -46,6 +49,7 @@ namespace Paradigm.Services.Tests.Tests.Extensions
             serviceCollection.AddProviders(entryPoint);
             serviceCollection.AddWorkingTasks(entryPoint);
             serviceCollection.AddUnitOfWork();
+            serviceCollection.AddExceptionHandler(typeof(Fixtures.Tests.Exceptions));
 
             var serviceProvider = serviceCollection.BuildServiceProvider();
 
@@ -82,6 +86,9 @@ namespace Paradigm.Services.Tests.Tests.Extensions
 
             var iunitOfWork = serviceProvider.GetService<IUnitOfWork>();
             iunitOfWork.Should().NotBeNull();
+
+            var iexceptionHandler = serviceProvider.GetService<IExceptionHandler>();
+            iexceptionHandler.Should().NotBeNull();
         }
 
         [TestCase]
@@ -91,9 +98,9 @@ namespace Paradigm.Services.Tests.Tests.Extensions
             var entryPoint = typeof(ServiceCollectionExtensionsTest).Assembly;
 
             serviceCollection.AddScoped<IDatabaseConnector, MySqlDatabaseConnector>();
-            serviceCollection.AddParadimFramework(entryPoint);
+            serviceCollection.AddParadimFramework(typeof(Fixtures.Tests.Exceptions), entryPoint);
 
-            serviceCollection.Count.Should().Be(15);
+            serviceCollection.Count.Should().Be(17);
             var serviceProvider = serviceCollection.BuildServiceProvider();
 
             var domainObject = serviceProvider.GetService<DomainObject1>();

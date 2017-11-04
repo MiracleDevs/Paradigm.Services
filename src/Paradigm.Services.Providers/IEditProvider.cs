@@ -13,7 +13,7 @@ namespace Paradigm.Services.Providers
 {
     public partial interface IEditProvider<TInterface, TDomain, TView, in TId> : IReadProvider<TView, TId>
         where TInterface : IDomainInterface
-        where TDomain : DomainBase<TInterface, TDomain>, TInterface, new()
+        where TDomain : DomainBase<TInterface, TDomain>, TInterface
         where TView : DomainBase
     {
         List<TDomain> FindEntity();

@@ -14,7 +14,7 @@ namespace Paradigm.Services.Providers
     public partial interface IEditProvider<TInterface, TDomain,in TId>: 
         IProvider
         where TInterface : IDomainInterface
-        where TDomain : DomainBase<TInterface, TDomain>, TInterface, new()
+        where TDomain : DomainBase<TInterface, TDomain>, TInterface
     {
         List<TDomain> FindEntity();
 

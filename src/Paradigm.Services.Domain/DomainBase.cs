@@ -90,7 +90,7 @@ namespace Paradigm.Services.Domain
     [Serializable]
     public abstract class DomainBase<TInterface, TEntity>: DomainBase, IDomainInterface
     where TInterface : IDomainInterface
-    where TEntity : DomainBase<TInterface, TEntity>, TInterface, new()
+    where TEntity : DomainBase<TInterface, TEntity>, TInterface
     {
         #region Public Methods
 

@@ -27,7 +27,7 @@ namespace Paradigm.Services.Providers
 
         public virtual async Task<TDomain> AddAsync(TInterface contract)
         {
-            var entity = new TDomain();
+            var entity = this.GetNewDomainEntity();
             
             this.BeforeCreate(entity, contract);
             await this.BeforeCreateAsync(entity, contract);
@@ -53,7 +53,7 @@ namespace Paradigm.Services.Providers
 
             foreach (var contract in contracts)
             {
-                var entity = new TDomain();
+                var entity = this.GetNewDomainEntity();
 
                 this.BeforeCreate(entity, contract);
                 await this.BeforeCreateAsync(entity, contract);
@@ -193,7 +193,7 @@ namespace Paradigm.Services.Providers
             {
                 if (contract.IsNew())
                 {
-                    var entity = new TDomain();
+                    var entity = this.GetNewDomainEntity();
 
                     this.BeforeCreate(entity, contract);
                     await this.BeforeCreateAsync(entity, contract);
