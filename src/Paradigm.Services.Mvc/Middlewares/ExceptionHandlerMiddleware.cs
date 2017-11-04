@@ -93,7 +93,7 @@ namespace Paradigm.Services.Mvc.Middlewares
 
                 if (logging != null)
                 {
-                    await logging.LogAsync(ex.Message, LogType.Error, Environment.NewLine + ex.StackTrace);
+                    await logging.LogAsync(ex.Message.Replace(Environment.NewLine, "<br />"), LogType.Error, ex.StackTrace.Replace(Environment.NewLine, "<br />"));
                 }
             }
             catch

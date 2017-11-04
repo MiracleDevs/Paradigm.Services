@@ -37,6 +37,20 @@ Version `2.0.4`
 
 - Added a new edit provider that works only with a domain entity instead of having both domain and view. This ideal for simple case scenarios, or when using cassandra connector without materialized views.
 
+- Added new helper methods that populates (register) the service collection will all the user classes
+  that inherits from the framework types:
+  - `serviceCollection.UseDomain()`
+  - `serviceCollection.UseDatabaseAccess()`
+  - `serviceCollection.UseDatabaseReaderMappers()`
+  - `serviceCollection.UseStoredProcedures()`
+  - `serviceCollection.UseRepositories()`
+  - `serviceCollection.UseProviders()`
+  - `serviceCollection.UseWorkingTasks()`
+  - `serviceCollection.UseUnitOfWork()`
+
+- Added  a helper method that includes all the methods above>
+  - `serviceCollection.UserParadigmFramework()`
+
 Version `2.0.3`
 - Changed the ORM middleware to use configuration instead of configuration root,
   and added specific exceptions.

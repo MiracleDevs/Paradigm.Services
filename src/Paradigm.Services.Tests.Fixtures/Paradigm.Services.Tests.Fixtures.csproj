@@ -1,16 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="FluentAssertions" Version="4.19.4" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.3.0" />
-    <PackageReference Include="NUnit" Version="3.8.1" />
-    <PackageReference Include="NUnit3TestAdapter" Version="3.9.0" />
-    <PackageReference Include="Paradigm.ORM.Data.MySql" Version="2.1.1" />
-  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Paradigm.Services.Domain\Paradigm.Services.Domain.csproj" />
@@ -24,7 +16,6 @@
     <ProjectReference Include="..\Paradigm.Services.Repositories.ORM\Paradigm.Services.Repositories.ORM.csproj" />
     <ProjectReference Include="..\Paradigm.Services.Repositories\Paradigm.Services.Repositories.csproj" />
     <ProjectReference Include="..\Paradigm.Services.StateMachines\Paradigm.Services.StateMachines.csproj" />
-    <ProjectReference Include="..\Paradigm.Services.Tests.Fixtures\Paradigm.Services.Tests.Fixtures.csproj" />
     <ProjectReference Include="..\Paradigm.Services.WorkingTasks.EntityFramework\Paradigm.Services.WorkingTasks.EntityFramework.csproj" />
     <ProjectReference Include="..\Paradigm.Services.WorkingTasks.ORM\Paradigm.Services.WorkingTasks.ORM.csproj" />
     <ProjectReference Include="..\Paradigm.Services.WorkingTasks\Paradigm.Services.WorkingTasks.csproj" />
