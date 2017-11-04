@@ -27,7 +27,7 @@ Change log
 
 Version `2.0.5`
 - Updated nuget dependencies.
-- Changed the name of Use** methods by Add** when registering dependency ijection container.
+- Changed the name of Use** methods by Add** when registering dependency injection container.
 - Added new `serviceCollection.AddExceptionHandler()` method.
 - Moved service collection extensions to separate methods than can be used in both mvc and console projects.
 - Added a new extension method to automatically register mappings.
