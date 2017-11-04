@@ -13,9 +13,11 @@
     <RepositoryUrl>https://github.com/MiracleDevs/Paradigm.Services.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <Version>2.0.4</Version>
+    <Product>Paradigm Services</Product>
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Paradigm.Services.DependencyInjection.Extensions.ORM\Paradigm.Services.DependencyInjection.Extensions.ORM.csproj" />
     <ProjectReference Include="..\Paradigm.Services.Domain\Paradigm.Services.Domain.csproj" />
     <ProjectReference Include="..\Paradigm.Services.Exceptions\Paradigm.Services.Exceptions.csproj" />
     <ProjectReference Include="..\Paradigm.Services.Interfaces\Paradigm.Services.Interfaces.csproj" />

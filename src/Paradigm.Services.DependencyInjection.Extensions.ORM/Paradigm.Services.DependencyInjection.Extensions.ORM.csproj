@@ -1,14 +1,11 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Copyright>Miracle Devs</Copyright>
-    <PackageProjectUrl>https://www.Paradigm.com</PackageProjectUrl>
-    <Description>Base library for mvc and api .net core sites.
-If you are using either EF or ORM check the specific implementations as well.
-- Paradigm.Services.Mvc.ORM
-- Paradigm.Services.Mvc.EntityFramework</Description>
+    <PackageProjectUrl>http://www.miracledevs.com</PackageProjectUrl>
+    <Description>Provides extension methods to register framework classes and user inherited classes related to Paradigm ORM.</Description>
     <Authors>Miracle Devs</Authors>
     <Company>Miracle Devs</Company>
     <PackageLicenseUrl>https://github.com/MiracleDevs/Paradigm.Services/blob/master/LICENSE</PackageLicenseUrl>
@@ -20,22 +17,14 @@ If you are using either EF or ORM check the specific implementations as well.
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore" Version="2.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.0.0" />
-    <PackageReference Include="Paradigm.Core.DependencyInjection" Version="2.0.2" />
-    <PackageReference Include="Paradigm.Core.Extensions" Version="2.0.2" />
-    <PackageReference Include="Paradigm.Core.Logging" Version="2.0.2" />
-    <PackageReference Include="Paradigm.Core.Mapping" Version="2.0.2" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Paradigm.Services.DependencyInjection.Extensions\Paradigm.Services.DependencyInjection.Extensions.csproj" />
     <ProjectReference Include="..\Paradigm.Services.Domain\Paradigm.Services.Domain.csproj" />
     <ProjectReference Include="..\Paradigm.Services.Exceptions\Paradigm.Services.Exceptions.csproj" />
     <ProjectReference Include="..\Paradigm.Services.Interfaces\Paradigm.Services.Interfaces.csproj" />
-    <ProjectReference Include="..\Paradigm.Services.Mapping.Extensions\Paradigm.Services.Mapping.Extensions.csproj" />
     <ProjectReference Include="..\Paradigm.Services.Providers\Paradigm.Services.Providers.csproj" />
+    <ProjectReference Include="..\Paradigm.Services.Repositories.ORM\Paradigm.Services.Repositories.ORM.csproj" />
     <ProjectReference Include="..\Paradigm.Services.Repositories\Paradigm.Services.Repositories.csproj" />
+    <ProjectReference Include="..\Paradigm.Services.WorkingTasks.ORM\Paradigm.Services.WorkingTasks.ORM.csproj" />
     <ProjectReference Include="..\Paradigm.Services.WorkingTasks\Paradigm.Services.WorkingTasks.csproj" />
   </ItemGroup>
 

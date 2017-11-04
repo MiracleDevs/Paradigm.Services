@@ -1,14 +1,11 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Copyright>Miracle Devs</Copyright>
     <PackageProjectUrl>https://www.Paradigm.com</PackageProjectUrl>
-    <Description>Base library for mvc and api .net core sites.
-If you are using either EF or ORM check the specific implementations as well.
-- Paradigm.Services.Mvc.ORM
-- Paradigm.Services.Mvc.EntityFramework</Description>
+    <Description>Base library for command line applications and services.</Description>
     <Authors>Miracle Devs</Authors>
     <Company>Miracle Devs</Company>
     <PackageLicenseUrl>https://github.com/MiracleDevs/Paradigm.Services/blob/master/LICENSE</PackageLicenseUrl>
@@ -18,10 +15,13 @@ If you are using either EF or ORM check the specific implementations as well.
     <Version>2.0.4</Version>
     <Product>Paradigm Services</Product>
   </PropertyGroup>
-
+  
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore" Version="2.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.0.0" />
+    <PackageReference Include="Microsoft.Extensions.CommandLineUtils" Version="1.1.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="2.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.0.0" />
     <PackageReference Include="Paradigm.Core.DependencyInjection" Version="2.0.2" />
     <PackageReference Include="Paradigm.Core.Extensions" Version="2.0.2" />
     <PackageReference Include="Paradigm.Core.Logging" Version="2.0.2" />
@@ -38,5 +38,5 @@ If you are using either EF or ORM check the specific implementations as well.
     <ProjectReference Include="..\Paradigm.Services.Repositories\Paradigm.Services.Repositories.csproj" />
     <ProjectReference Include="..\Paradigm.Services.WorkingTasks\Paradigm.Services.WorkingTasks.csproj" />
   </ItemGroup>
-
+  
 </Project>
