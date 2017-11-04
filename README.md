@@ -24,6 +24,21 @@ Base libraries for service and webapi projects, containing support for different
 
 Change log
 ---
+
+Version `2.0.5`
+- Updated nuget dependencies.
+- Changed the name of Use** methods by Add** when registering dependency ijection container.
+- Added new `serviceCollection.AddExceptionHandler()` method.
+- Moved service collection extensions to separate methods than can be used in both mvc and console projects.
+- Added a new extension method to automatically register mappings.
+- Added new `Paradigm.Services.CLI` project with classes that help when working with console apps.
+  This library imitates the program/startup approach of mvc applications, allowing to add configuration,
+  command line arguments and more.
+- Changed providers to use the service provider to instantiate new entities before trying to use the activator.
+  This will allow for better DDD, allowing custom entity constructors with injection dependency.
+  This will allow domain entities to receive repositories as injection parameters.
+
+
 Version `2.0.4`
 - Added new methods to DomainBase:
   - BeforeSave: Method called before the entity is added or edited.
