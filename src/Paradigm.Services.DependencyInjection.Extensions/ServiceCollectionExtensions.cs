@@ -47,7 +47,7 @@ namespace Paradigm.Services.DependencyInjection.Extensions
         /// Registers the domain classes.
         /// </summary>
         /// <param name="serviceCollection">The service collection.</param>
-        /// <param name="assembly">Optional assembly to use as entry point.</param>
+        /// <param name="assembly">Optional assembly to use as entry point. If no assembly is provided, the system will use the entry assembly. By default the system will use the entry assembly.</param>
         public static void AddDomainObjects(this IServiceCollection serviceCollection, Assembly assembly = null)
         {
             RegisterTypes(serviceCollection, typeof(DomainBase), assembly);
@@ -57,7 +57,7 @@ namespace Paradigm.Services.DependencyInjection.Extensions
         /// Registers the repositories.
         /// </summary>
         /// <param name="serviceCollection">The service collection.</param>
-        /// <param name="assembly">Optional assembly to use as entry point.</param>
+        /// <param name="assembly">Optional assembly to use as entry point. If no assembly is provided, the system will use the entry assembly. By default the system will use the entry assembly.</param>
         public static void AddRepositories(this IServiceCollection serviceCollection, Assembly assembly = null)
         {
             if (serviceCollection == null)
@@ -81,7 +81,7 @@ namespace Paradigm.Services.DependencyInjection.Extensions
         /// Registers the providers.
         /// </summary>
         /// <param name="serviceCollection">The service collection.</param>
-        /// <param name="assembly">Optional assembly to use as entry point.</param>
+        /// <param name="assembly">Optional assembly to use as entry point. If no assembly is provided, the system will use the entry assembly. By default the system will use the entry assembly.</param>
         public static void AddProviders(this IServiceCollection serviceCollection, Assembly assembly = null)
         {
             if (serviceCollection == null)
@@ -105,12 +105,13 @@ namespace Paradigm.Services.DependencyInjection.Extensions
         /// Registers the working tasks.
         /// </summary>
         /// <param name="serviceCollection">The service collection.</param>
-        /// <param name="assembly">Optional assembly to use as entry point.</param>
+        /// <param name="assembly">Optional assembly to use as entry point. If no assembly is provided, the system will use the entry assembly. By default the system will use the entry assembly.</param>
         public static void AddWorkingTasks(this IServiceCollection serviceCollection, Assembly assembly = null)
         {
             if (serviceCollection == null)
                 throw new ArgumentNullException(nameof(serviceCollection));
 
+            serviceCollection.AddTransient<IWorkTask, WorkTask>();
             var registrableTypes = GetTypesThatInherit(typeof(IWorkTask), assembly);
 
             foreach (var type in registrableTypes)
@@ -130,7 +131,7 @@ namespace Paradigm.Services.DependencyInjection.Extensions
         /// </summary>
         /// <param name="serviceCollection">The service collection.</param>
         /// <param name="type">The type.</param>
-        /// <param name="assembly">Optional assembly to use as entry point.</param>
+        /// <param name="assembly">Optional assembly to use as entry point. If no assembly is provided, the system will use the entry assembly. By default the system will use the entry assembly.</param>
         /// <exception cref="ArgumentNullException">serviceCollection</exception>
         private static void RegisterTypes(IServiceCollection serviceCollection, Type type, Assembly assembly = null)
         {
@@ -149,11 +150,11 @@ namespace Paradigm.Services.DependencyInjection.Extensions
         /// Gets the types that inherit.
         /// </summary>
         /// <param name="type">The type.</param>
-        /// <param name="assembly">Optional assembly to use as entry point.</param>
+        /// <param name="assembly">Optional assembly to use as entry point. If no assembly is provided, the system will use the entry assembly. By default the system will use the entry assembly.</param>
         /// <returns></returns>
         private static List<TypeInfo> GetTypesThatInherit(Type type, Assembly assembly = null)
         {
-            return (assembly ?? Assembly.GetCallingAssembly())
+            return (assembly ?? Assembly.GetEntryAssembly())
                 .GetReferencedAssemblies()
                 .Select(Assembly.Load)
                 .SelectMany(x => x.DefinedTypes)

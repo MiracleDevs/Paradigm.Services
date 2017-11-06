@@ -27,7 +27,7 @@ namespace Paradigm.Services.Mapping.Extensions
 
         private static IEnumerable<TypeInfo> GetMappingTypes(Assembly assembly,  string mappingMehtod)
         {
-            return (assembly ?? Assembly.GetCallingAssembly())
+            return (assembly ?? Assembly.GetEntryAssembly())
                 .GetReferencedAssemblies()
                 .Select(Assembly.Load)
                 .SelectMany(x => x.DefinedTypes)

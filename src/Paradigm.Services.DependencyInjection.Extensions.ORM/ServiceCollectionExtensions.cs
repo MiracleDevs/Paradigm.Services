@@ -7,6 +7,8 @@ using Paradigm.ORM.Data.Attributes;
 using Paradigm.ORM.Data.DatabaseAccess;
 using Paradigm.ORM.Data.Mappers;
 using Paradigm.ORM.Data.StoredProcedures;
+using Paradigm.Services.WorkingTasks;
+using Paradigm.Services.WorkingTasks.ORM;
 
 namespace Paradigm.Services.DependencyInjection.Extensions.ORM
 {
@@ -29,7 +31,8 @@ namespace Paradigm.Services.DependencyInjection.Extensions.ORM
         /// - Working Tasks.
         /// </remarks>
         /// <param name="serviceCollection">The service collection.</param>
-        /// <param name="assembly">Optional assembly to use as entry point.</param>
+        /// <param name="exceptionHandlerResourceType">Resource type with exception messages.</param>
+        /// <param name="assembly">Optional assembly to use as entry point. If no assembly is provided, the system will use the entry assembly. By default the system will use the entry assembly.</param>
         public static void AddParadimFramework(this IServiceCollection serviceCollection, Type exceptionHandlerResourceType, Assembly assembly = null)
         {
             if (serviceCollection == null)
@@ -42,25 +45,27 @@ namespace Paradigm.Services.DependencyInjection.Extensions.ORM
             serviceCollection.AddRepositories(assembly);
             serviceCollection.AddProviders(assembly);
             serviceCollection.AddWorkingTasks(assembly);
+            serviceCollection.AddTransactionalWorkingTasks(assembly);
             serviceCollection.AddUnitOfWork();
             serviceCollection.AddExceptionHandler(exceptionHandlerResourceType);
         }
 
         /// <summary>
-        /// Registers the database access classes.
+        /// Registers the working tasks.
         /// </summary>
         /// <param name="serviceCollection">The service collection.</param>
-        /// <param name="assembly">Optional assembly to use as entry point.</param>
-        public static void AddDatabaseAccess(this IServiceCollection serviceCollection, Assembly assembly = null)
+        /// <param name="assembly">Optional assembly to use as entry point. If no assembly is provided, the system will use the entry assembly. By default the system will use the entry assembly.</param>
+        public static void AddTransactionalWorkingTasks(this IServiceCollection serviceCollection, Assembly assembly = null)
         {
             if (serviceCollection == null)
                 throw new ArgumentNullException(nameof(serviceCollection));
 
-            var registrableTypes = GetTypesThatInherit(typeof(IDatabaseAccess), assembly);
+            serviceCollection.AddTransient<ITransactionalWorkTask, TransactionalWorkTask>();
+            var registrableTypes = GetTypesThatInherit(typeof(ITransactionalWorkTask), assembly);
 
             foreach (var type in registrableTypes)
             {
-                var interfaceType = type.GetInterfaces().Except(type.BaseType.GetInterfaces()).FirstOrDefault(x => typeof(IDatabaseAccess).IsAssignableFrom(x));
+                var interfaceType = type.GetInterfaces().Except(type.BaseType.GetInterfaces()).FirstOrDefault(x => typeof(ITransactionalWorkTask).IsAssignableFrom(x));
 
                 if (interfaceType == null)
                     continue;
@@ -71,10 +76,36 @@ namespace Paradigm.Services.DependencyInjection.Extensions.ORM
         }
 
         /// <summary>
+        /// Registers the database access classes.
+        /// </summary>
+        /// <param name="serviceCollection">The service collection.</param>
+        /// <param name="assembly">Optional assembly to use as entry point. If no assembly is provided, the system will use the entry assembly. By default the system will use the entry assembly.</param>
+        public static void AddDatabaseAccess(this IServiceCollection serviceCollection, Assembly assembly = null)
+        {
+            if (serviceCollection == null)
+                throw new ArgumentNullException(nameof(serviceCollection));
+
+            var registrableTypes = GetTypesThatInherit(typeof(IDatabaseAccess), assembly);
+
+            foreach (var type in registrableTypes)
+            {
+                var interfaceType = type.GetInterfaces().Except(type.BaseType.GetInterfaces()).FirstOrDefault(x => typeof(IDatabaseAccess).IsAssignableFrom(x));
+                var genericInterfaceType = interfaceType?.GetInterfaces().Where(x => x.GetGenericArguments() != null && x.GetGenericArguments().Any()).FirstOrDefault(x => typeof(IDatabaseAccess).IsAssignableFrom(x));
+
+                if (interfaceType == null || genericInterfaceType == null)
+                    continue;
+
+                serviceCollection.AddTransient(interfaceType, type);
+                serviceCollection.AddTransient(genericInterfaceType, type);
+                serviceCollection.AddTransient(type);
+            }
+        }
+
+        /// <summary>
         /// Registers the database reader mappers.
         /// </summary>
         /// <param name="serviceCollection">The service collection.</param>
-        /// <param name="assembly">Optional assembly to use as entry point.</param>
+        /// <param name="assembly">Optional assembly to use as entry point. If no assembly is provided, the system will use the entry assembly. By default the system will use the entry assembly.</param>
         public static void AddDatabaseReaderMappers(this IServiceCollection serviceCollection, Assembly assembly = null)
         {
             if (serviceCollection == null)
@@ -100,7 +131,7 @@ namespace Paradigm.Services.DependencyInjection.Extensions.ORM
         /// Registers the stored procedures.
         /// </summary>
         /// <param name="serviceCollection">The service collection.</param>
-        /// <param name="assembly">Optional assembly to use as entry point.</param>
+        /// <param name="assembly">Optional assembly to use as entry point. If no assembly is provided, the system will use the entry assembly. By default the system will use the entry assembly.</param>
         public static void AddStoredProcedures(this IServiceCollection serviceCollection, Assembly assembly = null)
         {
             if (serviceCollection == null)
@@ -127,7 +158,7 @@ namespace Paradigm.Services.DependencyInjection.Extensions.ORM
         /// </summary>
         /// <param name="serviceCollection">The service collection.</param>
         /// <param name="type">The type.</param>
-        /// <param name="assembly">Optional assembly to use as entry point.</param>
+        /// <param name="assembly">Optional assembly to use as entry point. If no assembly is provided, the system will use the entry assembly. By default the system will use the entry assembly.</param>
         /// <exception cref="ArgumentNullException">serviceCollection</exception>
         private static void RegisterTypesThatAreDecoratedBy(IServiceCollection serviceCollection, Type type, Assembly assembly = null)
         {
@@ -146,7 +177,7 @@ namespace Paradigm.Services.DependencyInjection.Extensions.ORM
         /// Gets the types that inherit.
         /// </summary>
         /// <param name="type">The type.</param>
-        /// <param name="assembly">Optional assembly to use as entry point.</param>
+        /// <param name="assembly">Optional assembly to use as entry point. If no assembly is provided, the system will use the entry assembly. By default the system will use the entry assembly.</param>
         /// <returns></returns>
         private static List<TypeInfo> GetTypesThatInherit(Type type, Assembly assembly = null)
         {
@@ -167,12 +198,12 @@ namespace Paradigm.Services.DependencyInjection.Extensions.ORM
         /// Gets the types that inherit.
         /// </summary>
         /// <param name="type">The type.</param>
-        /// <param name="assembly">Optional assembly to use as entry point.</param>
+        /// <param name="assembly">Optional assembly to use as entry point. If no assembly is provided, the system will use the entry assembly. By default the system will use the entry assembly.</param>
         /// <returns></returns>
         private static List<TypeInfo> GetTypesThatAreDecoratedBy(Type type, Assembly assembly = null)
         {
             // TODO: move this method as an extension of assenbly to Paradigm.Services.Extensions
-            return (assembly ?? Assembly.GetCallingAssembly())
+            return (assembly ?? Assembly.GetEntryAssembly())
                 .GetReferencedAssemblies()
                 .Select(Assembly.Load)
                 .SelectMany(x => x.DefinedTypes)

@@ -25,6 +25,16 @@ Base libraries for service and webapi projects, containing support for different
 Change log
 ---
 
+Version `2.0.6`
+- Added new method to register transactional working tasks.
+- Changed the default behavior when registering types, to use the entry assembly instead of the calling assembly.
+- Changed the default behavior when registering mappings, to use the entry assembly instead of the calling assembly.
+- Changed how database access are registered, and added a new registration:
+  - ICustomDatabaseAccess => CustomDatabaseAccess
+  - IDatabaseAccess<Custom> => CustomDatabaseAccess
+  - CustomDatabaseAccess => CustomDatabaseAccess
+
+
 Version `2.0.5`
 - Updated nuget dependencies.
 - Changed the name of Use** methods by Add** when registering dependency injection container.

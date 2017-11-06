@@ -8,6 +8,8 @@ using Paradigm.Services.DependencyInjection.Extensions.ORM;
 using Paradigm.Services.Exceptions;
 using Paradigm.Services.Repositories.UOW;
 using Paradigm.Services.Tests.Fixtures.Tests;
+using Paradigm.Services.WorkingTasks;
+using Paradigm.Services.WorkingTasks.ORM;
 
 namespace Paradigm.Services.Tests.Tests.Extensions
 {
@@ -26,12 +28,13 @@ namespace Paradigm.Services.Tests.Tests.Extensions
             serviceCollection.AddDatabaseReaderMappers(entryPoint);
             serviceCollection.AddStoredProcedures(entryPoint);
             serviceCollection.AddRepositories(entryPoint);
-            serviceCollection.AddProviders(entryPoint);        
+            serviceCollection.AddProviders(entryPoint);
             serviceCollection.AddWorkingTasks(entryPoint);
+            serviceCollection.AddTransactionalWorkingTasks(entryPoint);
             serviceCollection.AddUnitOfWork();
             serviceCollection.AddExceptionHandler(typeof(Fixtures.Tests.Exceptions));
 
-            serviceCollection.Count.Should().Be(17);
+            serviceCollection.Count.Should().Be(20);
         }
 
         [TestCase]
@@ -100,7 +103,7 @@ namespace Paradigm.Services.Tests.Tests.Extensions
             serviceCollection.AddScoped<IDatabaseConnector, MySqlDatabaseConnector>();
             serviceCollection.AddParadimFramework(typeof(Fixtures.Tests.Exceptions), entryPoint);
 
-            serviceCollection.Count.Should().Be(17);
+            serviceCollection.Count.Should().Be(20);
             var serviceProvider = serviceCollection.BuildServiceProvider();
 
             var domainObject = serviceProvider.GetService<DomainObject1>();
