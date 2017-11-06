@@ -157,6 +157,7 @@ namespace Paradigm.Services.DependencyInjection.Extensions
             return (assembly ?? Assembly.GetEntryAssembly())
                 .GetReferencedAssemblies()
                 .Select(Assembly.Load)
+                .Union(new[] { assembly ?? Assembly.GetEntryAssembly() })
                 .SelectMany(x => x.DefinedTypes)
                 .Where(x => type.IsAssignableFrom(x.AsType()) &&
                             !x.IsAbstract &&

@@ -51,6 +51,45 @@ namespace Paradigm.Services.DependencyInjection.Extensions.ORM
         }
 
         /// <summary>
+        /// Registers all the different layers used by the paradigm framework.
+        /// </summary>
+        /// <remarks>
+        /// This method will register:
+        /// - Domain objects and views.
+        /// - Database access objects.
+        /// - Database reader mappers.
+        /// - Stored procedures and stored procedure parameters.
+        /// - Repositories.
+        /// - Providers.
+        /// - Working Tasks.
+        /// </remarks>
+        /// <param name="serviceCollection">The service collection.</param>
+        /// <param name="exceptionHandlerResourceType">Resource type with exception messages.</param>
+        /// <param name="assemblies">Optional assemblies to use as entry point. If no assembly is provided, the system will use the entry assembly. By default the system will use the entry assembly.</param>
+        public static void AddParadimFramework(this IServiceCollection serviceCollection, Type exceptionHandlerResourceType, params Assembly[] assemblies)
+        {
+            if (serviceCollection == null)
+                throw new ArgumentNullException(nameof(serviceCollection));
+
+            if (assemblies == null || !assemblies.Any())
+                assemblies = new[] { Assembly.GetEntryAssembly() };
+
+            foreach (var assembly in assemblies)
+            {
+                serviceCollection.AddDomainObjects(assembly);
+                serviceCollection.AddDatabaseAccess(assembly);
+                serviceCollection.AddDatabaseReaderMappers(assembly);
+                serviceCollection.AddStoredProcedures(assembly);
+                serviceCollection.AddRepositories(assembly);
+                serviceCollection.AddProviders(assembly);
+                serviceCollection.AddWorkingTasks(assembly);
+                serviceCollection.AddTransactionalWorkingTasks(assembly);
+                serviceCollection.AddUnitOfWork();
+                serviceCollection.AddExceptionHandler(exceptionHandlerResourceType);
+            }
+        }
+
+        /// <summary>
         /// Registers the working tasks.
         /// </summary>
         /// <param name="serviceCollection">The service collection.</param>
@@ -182,9 +221,10 @@ namespace Paradigm.Services.DependencyInjection.Extensions.ORM
         private static List<TypeInfo> GetTypesThatInherit(Type type, Assembly assembly = null)
         {
             // TODO: move this method as an extension of assenbly to Paradigm.Services.Extensions
-            return (assembly ?? Assembly.GetCallingAssembly())
+            return (assembly ?? Assembly.GetEntryAssembly())
                 .GetReferencedAssemblies()
                 .Select(Assembly.Load)
+                .Union(new[] { assembly ?? Assembly.GetEntryAssembly() })
                 .SelectMany(x => x.DefinedTypes)
                 .Where(x => type.IsAssignableFrom(x.AsType()) &&
                             !x.IsAbstract &&
@@ -204,8 +244,9 @@ namespace Paradigm.Services.DependencyInjection.Extensions.ORM
         {
             // TODO: move this method as an extension of assenbly to Paradigm.Services.Extensions
             return (assembly ?? Assembly.GetEntryAssembly())
-                .GetReferencedAssemblies()
+                .GetReferencedAssemblies()               
                 .Select(Assembly.Load)
+                .Union(new[] { assembly ?? Assembly.GetEntryAssembly() })
                 .SelectMany(x => x.DefinedTypes)
                 .Where(x => x.GetCustomAttribute(type) != null &&
                             !x.IsAbstract &&

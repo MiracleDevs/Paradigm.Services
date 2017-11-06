@@ -25,6 +25,11 @@ Base libraries for service and webapi projects, containing support for different
 Change log
 ---
 
+Version `2.0.7`
+- Changed the dependency registration to include the entry assembly in the lookup.
+- Added a new method than can receive multiple assemblies as parameters.
+
+
 Version `2.0.6`
 - Added new method to register transactional working tasks.
 - Changed the default behavior when registering types, to use the entry assembly instead of the calling assembly.

@@ -30,6 +30,7 @@ namespace Paradigm.Services.Mapping.Extensions
             return (assembly ?? Assembly.GetEntryAssembly())
                 .GetReferencedAssemblies()
                 .Select(Assembly.Load)
+                .Union(new[] { assembly ?? Assembly.GetEntryAssembly() })
                 .SelectMany(x => x.DefinedTypes)
                 .Where(x => typeof(DomainBase).IsAssignableFrom(x.AsType()) &&
                             !x.IsAbstract &&
