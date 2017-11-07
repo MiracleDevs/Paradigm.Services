@@ -25,6 +25,11 @@ Base libraries for service and webapi projects, containing support for different
 Change log
 ---
 
+Version `2.0.8`
+- Added a validation when parsing command line parameters to check if the argument allows null or not, and throw a clear error if an argument is missing.
+
+
+
 Version `2.0.7`
 - Changed the dependency registration to include the entry assembly in the lookup.
 - Added a new method than can receive multiple assemblies as parameters.

@@ -281,7 +281,23 @@ namespace Paradigm.Services.CLI
                     continue;
 
                 if (option.OptionType == CommandOptionType.SingleValue)
-                    property.SetValue(arguments, Convert.ChangeType(option.Value(), property.PropertyType));
+                {
+                    var value = option.Value();
+
+                    if (value == null)
+                    {
+                        if (property.PropertyType.IsInterface || property.PropertyType.IsClass || Nullable.GetUnderlyingType(property.PropertyType) != null)
+                            property.SetValue(arguments, null);
+                        else
+                        {
+                            throw new Exception($"Parameter '{option.Template}' is mandatory.");
+                        }
+                    }
+                    else
+                    {
+                        property.SetValue(arguments, Convert.ChangeType(option.Value(), property.PropertyType));
+                    }                  
+                }
                 else
                 {
                     var list = Activator.CreateInstance(property.PropertyType) as IList;
@@ -301,6 +317,7 @@ namespace Paradigm.Services.CLI
 
             this.ServiceCollection.AddSingleton(this.ArgumentsType, arguments);
         }
+
 
         /// <summary>
         /// Creates the service provider and runs the startup.
