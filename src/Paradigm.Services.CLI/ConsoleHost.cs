@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Reflection;
-using Microsoft.Extensions.CommandLineUtils;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -14,16 +9,8 @@ namespace Paradigm.Services.CLI
     /// Provides convenience methods to create a console application.
     /// </summary>
     public class ConsoleHost
-    {
+    {     
         #region Properties
-
-        /// <summary>
-        /// Gets the console line arguments.
-        /// </summary>
-        /// <value>
-        /// The console line arguments.
-        /// </value>
-        public string[] LineArguments { get; private set; }
 
         /// <summary>
         /// Gets the startup program.
@@ -58,44 +45,12 @@ namespace Paradigm.Services.CLI
         public IConfigurationRoot ConfigurationRoot { get; private set; }
 
         /// <summary>
-        /// Gets the short representation of the version.
+        /// Gets the argument parser.
         /// </summary>
         /// <value>
-        /// The short representation of the version.
+        /// The argument parser.
         /// </value>
-        public string ShortVersion { get; private set; }
-
-        /// <summary>
-        /// Gets the long representation of the version.
-        /// </summary>
-        /// <value>
-        /// The long representation of the version.
-        /// </value>
-        public string LongVersion { get; private set; }
-
-        /// <summary>
-        /// Gets or sets the command line application parser.
-        /// </summary>
-        /// <value>
-        /// The command line application parser.
-        /// </value>
-        private CommandLineApplication CommandLineApplication { get; set; }
-
-        /// <summary>
-        /// Gets or sets the options and their properties.
-        /// </summary>
-        /// <value>
-        /// The options and their properties.
-        /// </value>
-        private Dictionary<PropertyInfo, CommandOption> Options { get; set; }
-
-        /// <summary>
-        /// Gets or sets the type of the arguments.
-        /// </summary>
-        /// <value>
-        /// The type of the arguments.
-        /// </value>
-        private Type ArgumentsType { get; set; }
+        public ArgumentParser ArgumentParser { get; private set; }
 
         #endregion
 
@@ -129,30 +84,8 @@ namespace Paradigm.Services.CLI
         /// <returns></returns>
         public ConsoleHost ParseArguments<T>(string[] args) where T : class
         {
-            this.LineArguments = args;
-            this.CommandLineApplication = new CommandLineApplication(false);
-            this.Options = new Dictionary<PropertyInfo, CommandOption>();
-            this.ArgumentsType = typeof(T);
-            var properties = this.ArgumentsType.GetProperties();
-            var helpOptionAttribute = this.ArgumentsType.GetCustomAttribute<HelpOptionAttribute>();
-            var versionOptionAttribute = this.ArgumentsType.GetCustomAttribute<VersionOptionAttribute>();
-
-            if (helpOptionAttribute != null)
-                this.CommandLineApplication.HelpOption(helpOptionAttribute.Template);
-
-            if (versionOptionAttribute != null)
-                this.CommandLineApplication.VersionOption(versionOptionAttribute.Template, () => this.ShortVersion, () => this.LongVersion);
-
-            foreach (var property in properties)
-            {
-                var argumentOptionAttribute = property.GetCustomAttribute<ArgumentOptionAttribute>();
-
-                if (argumentOptionAttribute == null)
-                    continue;
-
-                this.Options.Add(property, this.CommandLineApplication.Option(argumentOptionAttribute.GetTemplate(property.Name), argumentOptionAttribute.Description, argumentOptionAttribute.Type));
-            }
-
+            this.ArgumentParser = new ArgumentParser();
+            this.ArgumentParser.ParseArguments<T>(args);
             return this;
         }
 
@@ -164,9 +97,10 @@ namespace Paradigm.Services.CLI
         /// <returns></returns>
         public ConsoleHost SetVersion(string shortVersion, string longVersion)
         {
-            this.ShortVersion = shortVersion;
-            this.LongVersion = longVersion;
+            if (this.ArgumentParser == null)
+                throw new Exception("Please first call the method ParseArguments.");
 
+            this.ArgumentParser.SetVersion(shortVersion, longVersion);
             return this;
         }
 
@@ -217,8 +151,8 @@ namespace Paradigm.Services.CLI
         {
             try
             {
-                if (this.CommandLineApplication != null)
-                    return this.ParseCommandLineAndRun(onError);
+                if (this.ArgumentParser != null)
+                    return this.ArgumentParser.Run((t, a) => this.ServiceCollection.AddSingleton(t, a), onError);
 
                 this.RunStartup();
                 return 0;
@@ -233,91 +167,6 @@ namespace Paradigm.Services.CLI
         #endregion
 
         #region Private Methods
-
-        /// <summary>
-        /// Parses the command line and run the program.
-        /// </summary>
-        /// <param name="onError">The on error.</param>
-        /// <returns>Execution status code</returns>
-        private int ParseCommandLineAndRun(Action<Exception> onError)
-        {
-            this.CommandLineApplication.OnExecute(() =>
-            {
-                try
-                {
-                    this.ConfigureArguments();
-                    this.RunStartup();
-                    return 0;
-                }
-                catch (Exception ex)
-                {
-                    onError?.Invoke(ex);
-                    return -1;
-                }
-            });
-
-            return this.CommandLineApplication.Execute(this.LineArguments);
-        }
-
-        /// <summary>
-        /// Configures the argument object with the command line arguments.
-        /// </summary>
-        /// <exception cref="System.Exception">Couldn't create an instance of argument object provided.</exception>
-        private void ConfigureArguments()
-        {
-            if (this.CommandLineApplication == null || this.Options == null)
-                return;
-
-            var arguments = Activator.CreateInstance(this.ArgumentsType);
-
-            if (arguments == null)
-                throw new Exception("Couldn't create an instance of argument object provided.");
-
-            foreach (var property in this.Options.Keys)
-            {
-                var option = this.Options[property];
-
-                if (option.OptionType == CommandOptionType.NoValue)
-                    continue;
-
-                if (option.OptionType == CommandOptionType.SingleValue)
-                {
-                    var value = option.Value();
-
-                    if (value == null)
-                    {
-                        if (property.PropertyType.IsInterface || property.PropertyType.IsClass || Nullable.GetUnderlyingType(property.PropertyType) != null)
-                            property.SetValue(arguments, null);
-                        else
-                        {
-                            throw new Exception($"Parameter '{option.Template}' is mandatory.");
-                        }
-                    }
-                    else
-                    {
-                        property.SetValue(arguments, Convert.ChangeType(option.Value(), property.PropertyType));
-                    }                  
-                }
-                else
-                {
-                    var list = Activator.CreateInstance(property.PropertyType) as IList;
-                    var listItemType = property.PropertyType.GetGenericArguments().FirstOrDefault();
-
-                    if (list == null)
-                        throw new Exception($"Couldn't create the argument list for argument '{property.Name}'.");
-
-                    foreach (var value in option.Values)
-                    {
-                        list.Add(Convert.ChangeType(value, listItemType));
-                    }
-
-                    property.SetValue(arguments, list);
-                }
-            }
-
-            this.ServiceCollection.AddSingleton(this.ArgumentsType, arguments);
-        }
-
 
         /// <summary>
         /// Creates the service provider and runs the startup.

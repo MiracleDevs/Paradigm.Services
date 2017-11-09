@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Paradigm.Services.CLI\Paradigm.Services.CLI.csproj" />
     <ProjectReference Include="..\Paradigm.Services.Domain\Paradigm.Services.Domain.csproj" />
     <ProjectReference Include="..\Paradigm.Services.Exceptions.SqlServer\Paradigm.Services.Exceptions.SqlServer.csproj" />
     <ProjectReference Include="..\Paradigm.Services.Exceptions\Paradigm.Services.Exceptions.csproj" />

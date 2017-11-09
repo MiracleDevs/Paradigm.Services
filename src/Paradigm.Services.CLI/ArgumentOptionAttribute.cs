@@ -44,6 +44,14 @@ namespace Paradigm.Services.CLI
         /// </value>
         public CommandOptionType Type { get; }
 
+        /// <summary>
+        /// Gets the default value.
+        /// </summary>
+        /// <value>
+        /// The default value.
+        /// </value>
+        public object DefaultValue { get; }
+
         #endregion
 
         #region Constructor
@@ -55,6 +63,7 @@ namespace Paradigm.Services.CLI
         /// <param name="largeCommand">The large command.</param>
         /// <param name="description">The description.</param>
         /// <param name="type">The type.</param>
+        /// <param name="defaultValue">The default value for the property if no argument is provided.</param>
         /// <exception cref="System.ArgumentNullException">
         /// shortCommand
         /// or
@@ -62,12 +71,13 @@ namespace Paradigm.Services.CLI
         /// or
         /// description
         /// </exception>
-        public ArgumentOptionAttribute(string shortCommand, string largeCommand, string description, CommandOptionType type)
+        public ArgumentOptionAttribute(string shortCommand, string largeCommand, string description, CommandOptionType type, object defaultValue = null)
         {
             this.ShortArgument = shortCommand ?? throw new ArgumentNullException(nameof(shortCommand));
             this.LargeArgument = largeCommand ?? throw new ArgumentNullException(nameof(largeCommand));
             this.Description = description ?? throw new ArgumentNullException(nameof(description));
             this.Type = type;
+            this.DefaultValue = defaultValue;
         }
 
         #endregion

@@ -3,6 +3,10 @@
 
 | Library    | Nuget | Install
 |-|-|-|
+| CLI | [![NuGet](https://img.shields.io/nuget/v/Nuget.Core.svg)](https://www.nuget.org/packages/Paradigm.Services.CLI/) | `Install-Package Paradigm.Services.CLI` |
+| DependencyInjection.Extensions | [![NuGet](https://img.shields.io/nuget/v/Nuget.Core.svg)](https://www.nuget.org/packages/Paradigm.Services.DependencyInjection.Extensions/) | `Install-Package Paradigm.Services.DependencyInjection.Extensions` |
+| DependencyInjection.Extensions.ORM | [![NuGet](https://img.shields.io/nuget/v/Nuget.Core.svg)](https://www.nuget.org/packages/Paradigm.Services.DependencyInjection.Extensions.ORM/) | `Install-Package Paradigm.Services.DependencyInjection.Extensions.ORM` |
+| Mapping.Extensions | [![NuGet](https://img.shields.io/nuget/v/Nuget.Core.svg)](https://www.nuget.org/packages/Paradigm.Services.Mapping.Extensions/) | `Install-Package Paradigm.Services.Mapping.Extensions` |
 | Domain | [![NuGet](https://img.shields.io/nuget/v/Nuget.Core.svg)](https://www.nuget.org/packages/Paradigm.Services.Domain/) | `Install-Package Paradigm.Services.Domain` |
 | Exceptions | [![NuGet](https://img.shields.io/nuget/v/Nuget.Core.svg)](https://www.nuget.org/packages/Paradigm.Services.Exceptions/) | `Install-Package Paradigm.Services.Exceptions` |
 | Exceptions.SqlServer | [![NuGet](https://img.shields.io/nuget/v/Nuget.Core.svg)](https://www.nuget.org/packages/Paradigm.Services.Exceptions.SqlServer/) | `Install-Package Paradigm.Services.Exceptions.SqlServer` |
@@ -24,6 +28,34 @@ Base libraries for service and webapi projects, containing support for different
 
 Change log
 ---
+
+Version `2.0.9`
+- Improved `Paradigm.Services.CLI` argument parsing. Separated the logic to a new class,
+  and added tests. Now the parser supports parameters of type:
+  - `byte`
+  - `ushort`
+  - `uint`
+  - `ulong`
+  - `sbyte`
+  - `short`
+  - `int`
+  - `long`
+  - `float`
+  - `double`
+  - `decimal`
+  - `DateTime`
+  - `TimeSpan`
+  - `DateTimeOffset`
+  - `Guid`
+  - `Enums`
+
+  For all the types, the parser also supports nullable versions, and list of type or nullable types.
+  To support list types, remember to set the MultipleValue enumeration to the attribute.
+- Added default values to nullable parameters.
+- Changed working tasks when repeating indefinitely to not store exceptions. When using repeat=-1, the
+  system will continue retrying the task until success, so no exception will be thrown. If we store them,
+  we can virtually store exceptions consuming unnecessary memory.
+
 
 Version `2.0.8`
 - Added a validation when parsing command line parameters to check if the argument allows null or not, and throw a clear error if an argument is missing.

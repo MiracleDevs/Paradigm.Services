@@ -36,7 +36,15 @@ namespace Paradigm.Services.WorkingTasks
                 }
                 catch (Exception ex)
                 {
-                    exception.Add(ex);
+                    if (repeat >= 0)
+                    {
+                        // we avoid adding the exception
+                        // in case of repeat until works,
+                        // to prevent an escenario where
+                        // the exception list grows indefinitely.
+                        exception.Add(ex);
+                    }
+
                     needToRepeat = repeat < 0 || repeat > count++;
                     this.AfterExecuteFailed();
 
@@ -76,7 +84,15 @@ namespace Paradigm.Services.WorkingTasks
                 }
                 catch (Exception ex)
                 {
-                    exception.Add(ex);
+                    if (repeat >= 0)
+                    {
+                        // we avoid adding the exception
+                        // in case of repeat until works,
+                        // to prevent an escenario where
+                        // the exception list grows indefinitely.
+                        exception.Add(ex);
+                    }
+
                     needToRepeat = repeat < 0 || repeat > count++;
                     this.AfterExecuteFailed();
 
