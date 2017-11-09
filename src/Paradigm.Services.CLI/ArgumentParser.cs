@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using Microsoft.Extensions.CommandLineUtils;
+using Paradigm.Core.Extensions;
 
 namespace Paradigm.Services.CLI
 {
@@ -214,7 +216,6 @@ namespace Paradigm.Services.CLI
 
                             foreach (var value in option.CommandOption.Values)
                             {
-                                list.Add(Convert.ChangeType(value, listItemType));
                                 list.Add(GetArgumentValue(option.CommandOption.Template, listItemType, value, option.ArgumentOptionAttribute.DefaultValue));
                             }
 
@@ -245,23 +246,52 @@ namespace Paradigm.Services.CLI
         /// <exception cref="Exception"></exception>
         private static object GetArgumentValue(string template, Type type, string value, object defaultValue)
         {
+            var allowNulls = type.IsInterface || type.IsClass || Nullable.GetUnderlyingType(type) != null;
+            var innerType = Nullable.GetUnderlyingType(type);
+
             if (value == null)
             {
-                if (type.IsInterface || type.IsClass || Nullable.GetUnderlyingType(type) != null)
-                    return defaultValue;
-
-                throw new Exception($"Parameter '{template}' is mandatory.");
+                return allowNulls
+                    ? (innerType != null && defaultValue != null 
+                        ? Convert.ChangeType(defaultValue, innerType) 
+                        : defaultValue)
+                    : throw new Exception($"Parameter '{template}' is mandatory.");
             }
 
-            if (Nullable.GetUnderlyingType(type) != null)
-                type = Nullable.GetUnderlyingType(type);
-
-            if (type.IsEnum)
+            if (innerType != null && innerType.IsEnum)
             {
-                return Enum.Parse(type, value);
+                return Enum.Parse(innerType, value);
             }
 
-            return Convert.ChangeType(value, type);
+            if (innerType != null && innerType == typeof(TimeSpan))
+            {
+                return TimeSpan.Parse(value);
+            }
+
+            if (innerType != null && innerType == typeof(DateTime))
+            {
+                return DateTime.Parse(value);
+            }
+
+            if (innerType != null && innerType == typeof(DateTimeOffset))
+            {
+                return DateTimeOffset.Parse(value);
+            }
+
+            if (innerType != null && innerType == typeof(Guid))
+            {
+                return Guid.Parse(value);
+            }
+
+            var converter = TypeDescriptor.GetConverter(type);
+
+            if (converter.CanConvertFrom(typeof(string)))
+                return converter.ConvertFrom(value);
+
+            if (defaultValue == null && !allowNulls)
+                throw new Exception($"Can not parse the value for '{template}' and the argument does not have a default value.");
+
+            return defaultValue;
         }
 
         #endregion

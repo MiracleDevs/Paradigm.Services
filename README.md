@@ -29,6 +29,11 @@ Base libraries for service and webapi projects, containing support for different
 Change log
 ---
 
+Version `2.0.10`
+- Fixed errors when parsing timespans, guids, etc.
+- Fixed tests not testing some cases and giving false positives.
+
+
 Version `2.0.9`
 - Improved `Paradigm.Services.CLI` argument parsing. Separated the logic to a new class,
   and added tests. Now the parser supports parameters of type:

@@ -7,217 +7,217 @@ namespace Paradigm.Services.Tests.Fixtures.Tests
 {
     public class Arguments
     {
-        [ArgumentOption("-int",  "--int", "", CommandOptionType.SingleValue)]
+        [ArgumentOption("-byte",  "--long-byte", "", CommandOptionType.SingleValue)]
         public byte Byte { get; set; }
 
-        [ArgumentOption("-ushort", "--ushort", "", CommandOptionType.SingleValue)]
+        [ArgumentOption("-ushort", "--long-ushort", "", CommandOptionType.SingleValue)]
         public ushort UShort { get; set; }
 
-        [ArgumentOption("-uint", "--uint", "", CommandOptionType.SingleValue)]
+        [ArgumentOption("-uint", "--long-uint", "", CommandOptionType.SingleValue)]
         public uint UInt { get; set; }
 
-        [ArgumentOption("-ulong", "--ulong", "", CommandOptionType.SingleValue)]
+        [ArgumentOption("-ulong", "--long-ulong", "", CommandOptionType.SingleValue)]
         public ulong ULong { get; set; }
 
-        [ArgumentOption("-sbyte", "--sbyte", "", CommandOptionType.SingleValue)]
+        [ArgumentOption("-sbyte", "--long-sbyte", "", CommandOptionType.SingleValue)]
         public sbyte SByte { get; set; }
 
-        [ArgumentOption("-ushort", "--ushort", "", CommandOptionType.SingleValue)]
+        [ArgumentOption("-short", "--long-short", "", CommandOptionType.SingleValue)]
         public ushort Short { get; set; }
 
-        [ArgumentOption("-int", "--int", "", CommandOptionType.SingleValue)]
+        [ArgumentOption("-int", "--long-int", "", CommandOptionType.SingleValue)]
         public int Int { get; set; }
 
-        [ArgumentOption("-long", "--long", "", CommandOptionType.SingleValue)]
+        [ArgumentOption("-long", "--long-long", "", CommandOptionType.SingleValue)]
         public long Long { get; set; }
 
-        [ArgumentOption("-float", "--float", "", CommandOptionType.SingleValue)]
+        [ArgumentOption("-float", "--long-float", "", CommandOptionType.SingleValue)]
         public float Float { get; set; }
 
-        [ArgumentOption("-double", "--double", "", CommandOptionType.SingleValue)]
+        [ArgumentOption("-double", "--long-double", "", CommandOptionType.SingleValue)]
         public double Double { get; set; }
 
-        [ArgumentOption("-decimal", "--decimal", "", CommandOptionType.SingleValue)]
+        [ArgumentOption("-decimal", "--long-decimal", "", CommandOptionType.SingleValue)]
         public decimal Decimal { get; set; }
 
-        [ArgumentOption("-datetime", "--datetime", "", CommandOptionType.SingleValue)]
+        [ArgumentOption("-datetime", "--long-datetime", "", CommandOptionType.SingleValue)]
         public DateTime DateTime { get; set; }
 
-        [ArgumentOption("-timespan", "--timespan", "", CommandOptionType.SingleValue)]
+        [ArgumentOption("-timespan", "--long-timespan", "", CommandOptionType.SingleValue)]
         public TimeSpan TimeSpan { get; set; }
 
-        [ArgumentOption("-dtoffset", "--dtoffset", "", CommandOptionType.SingleValue)]
+        [ArgumentOption("-dtoffset", "--long-dtoffset", "", CommandOptionType.SingleValue)]
         public DateTimeOffset DateTimeOffset { get; set; }
 
-        [ArgumentOption("-guid", "--guid", "", CommandOptionType.SingleValue)]
+        [ArgumentOption("-guid", "--long-guid", "", CommandOptionType.SingleValue)]
         public Guid Guid { get; set; }
 
-        [ArgumentOption("-string", "--string", "", CommandOptionType.SingleValue)]
+        [ArgumentOption("-string", "--long-string", "", CommandOptionType.SingleValue)]
         public string String { get; set; }
 
-        [ArgumentOption("-enum", "--enum", "", CommandOptionType.SingleValue)]
+        [ArgumentOption("-enum", "--long-enum", "", CommandOptionType.SingleValue)]
         public Enumeration Enumeration { get; set; }
     }
 
     public class NullableArguments
     {
-        [ArgumentOption("-int", "--int", "", CommandOptionType.SingleValue, 1)]
+        [ArgumentOption("-byte", "--long-byte", "", CommandOptionType.SingleValue, 1)]
         public byte? Byte { get; set; }
 
-        [ArgumentOption("-ushort", "--ushort", "", CommandOptionType.SingleValue, 2)]
+        [ArgumentOption("-ushort", "--long-ushort", "", CommandOptionType.SingleValue, 2)]
         public ushort? UShort { get; set; }
 
-        [ArgumentOption("-uint", "--uint", "", CommandOptionType.SingleValue, 3)]
+        [ArgumentOption("-uint", "--long-uint", "", CommandOptionType.SingleValue, 3)]
         public uint? UInt { get; set; }
 
-        [ArgumentOption("-ulong", "--ulong", "", CommandOptionType.SingleValue, 4)]
+        [ArgumentOption("-ulong", "--long-ulong", "", CommandOptionType.SingleValue, 4)]
         public ulong? ULong { get; set; }
 
-        [ArgumentOption("-sbyte", "--sbyte", "", CommandOptionType.SingleValue,5)]
+        [ArgumentOption("-sbyte", "--long-sbyte", "", CommandOptionType.SingleValue,5)]
         public sbyte? SByte { get; set; }
 
-        [ArgumentOption("-ushort", "--ushort", "", CommandOptionType.SingleValue, 6)]
+        [ArgumentOption("-short", "--long-short", "", CommandOptionType.SingleValue, 6)]
         public ushort? Short { get; set; }
 
-        [ArgumentOption("-int", "--int", "", CommandOptionType.SingleValue, 7)]
+        [ArgumentOption("-int", "--long-int", "", CommandOptionType.SingleValue, 7)]
         public int? Int { get; set; }
 
-        [ArgumentOption("-long", "--long", "", CommandOptionType.SingleValue, 8)]
+        [ArgumentOption("-long", "--long-long", "", CommandOptionType.SingleValue, 8)]
         public long? Long { get; set; }
 
-        [ArgumentOption("-float", "--float", "", CommandOptionType.SingleValue, 9)]
+        [ArgumentOption("-float", "--long-float", "", CommandOptionType.SingleValue, 9)]
         public float? Float { get; set; }
 
-        [ArgumentOption("-double", "--double", "", CommandOptionType.SingleValue, 10)]
+        [ArgumentOption("-double", "--long-double", "", CommandOptionType.SingleValue, 10)]
         public double? Double { get; set; }
 
-        [ArgumentOption("-decimal", "--decimal", "", CommandOptionType.SingleValue, 11)]
+        [ArgumentOption("-decimal", "--long-decimal", "", CommandOptionType.SingleValue, 11)]
         public decimal? Decimal { get; set; }
 
-        [ArgumentOption("-datetime", "--datetime", "", CommandOptionType.SingleValue)]
+        [ArgumentOption("-datetime", "--long-datetime", "", CommandOptionType.SingleValue)]
         public DateTime? DateTime { get; set; }
 
-        [ArgumentOption("-timespan", "--timespan", "", CommandOptionType.SingleValue)]
+        [ArgumentOption("-timespan", "--long-timespan", "", CommandOptionType.SingleValue)]
         public TimeSpan? TimeSpan { get; set; }
 
-        [ArgumentOption("-dtoffset", "--dtoffset", "", CommandOptionType.SingleValue)]
+        [ArgumentOption("-dtoffset", "--long-dtoffset", "", CommandOptionType.SingleValue)]
         public DateTimeOffset? DateTimeOffset { get; set; }
 
-        [ArgumentOption("-guid", "--guid", "", CommandOptionType.SingleValue)]
+        [ArgumentOption("-guid", "--long-guid", "", CommandOptionType.SingleValue)]
         public Guid? Guid { get; set; }
 
-        [ArgumentOption("-string", "--string", "", CommandOptionType.SingleValue)]
+        [ArgumentOption("-string", "--long-string", "", CommandOptionType.SingleValue)]
         public string String { get; set; }
 
-        [ArgumentOption("-enum", "--enum", "", CommandOptionType.SingleValue, Tests.Enumeration.Value1)]
+        [ArgumentOption("-enum", "--long-enum", "", CommandOptionType.SingleValue, Tests.Enumeration.Value1)]
         public Enumeration? Enumeration { get; set; }
     }
 
     public class ListArguments
     {
-        [ArgumentOption("-int", "--int", "", CommandOptionType.MultipleValue)]
+        [ArgumentOption("-byte", "--long-byte", "", CommandOptionType.MultipleValue)]
         public List<byte> Byte { get; set; }
 
-        [ArgumentOption("-ushort", "--ushort", "", CommandOptionType.MultipleValue)]
+        [ArgumentOption("-ushort", "--long-ushort", "", CommandOptionType.MultipleValue)]
         public List<ushort> UShort { get; set; }
 
-        [ArgumentOption("-uint", "--uint", "", CommandOptionType.MultipleValue)]
+        [ArgumentOption("-uint", "--long-uint", "", CommandOptionType.MultipleValue)]
         public List<uint> UInt { get; set; }
 
-        [ArgumentOption("-ulong", "--ulong", "", CommandOptionType.MultipleValue)]
+        [ArgumentOption("-ulong", "--long-ulong", "", CommandOptionType.MultipleValue)]
         public List<ulong> ULong { get; set; }
 
-        [ArgumentOption("-sbyte", "--sbyte", "", CommandOptionType.MultipleValue)]
+        [ArgumentOption("-sbyte", "--long-sbyte", "", CommandOptionType.MultipleValue)]
         public List<sbyte> SByte { get; set; }
 
-        [ArgumentOption("-ushort", "--ushort", "", CommandOptionType.MultipleValue)]
+        [ArgumentOption("-short", "--long-short", "", CommandOptionType.MultipleValue)]
         public List<ushort> Short { get; set; }
 
-        [ArgumentOption("-int", "--int", "", CommandOptionType.MultipleValue)]
+        [ArgumentOption("-int", "--long-int", "", CommandOptionType.MultipleValue)]
         public List<int> Int { get; set; }
 
-        [ArgumentOption("-long", "--long", "", CommandOptionType.MultipleValue)]
+        [ArgumentOption("-long", "--long-long", "", CommandOptionType.MultipleValue)]
         public List<long> Long { get; set; }
 
-        [ArgumentOption("-float", "--float", "", CommandOptionType.MultipleValue)]
+        [ArgumentOption("-float", "--long-float", "", CommandOptionType.MultipleValue)]
         public List<float> Float { get; set; }
 
-        [ArgumentOption("-double", "--double", "", CommandOptionType.MultipleValue)]
+        [ArgumentOption("-double", "--long-double", "", CommandOptionType.MultipleValue)]
         public List<double> Double { get; set; }
 
-        [ArgumentOption("-decimal", "--decimal", "", CommandOptionType.MultipleValue)]
+        [ArgumentOption("-decimal", "--long-decimal", "", CommandOptionType.MultipleValue)]
         public List<decimal> Decimal { get; set; }
 
-        [ArgumentOption("-datetime", "--datetime", "", CommandOptionType.MultipleValue)]
+        [ArgumentOption("-datetime", "--long-datetime", "", CommandOptionType.MultipleValue)]
         public List<DateTime> DateTime { get; set; }
 
-        [ArgumentOption("-timespan", "--timespan", "", CommandOptionType.MultipleValue)]
+        [ArgumentOption("-timespan", "--long-timespan", "", CommandOptionType.MultipleValue)]
         public List<TimeSpan> TimeSpan { get; set; }
 
-        [ArgumentOption("-dtoffset", "--dtoffset", "", CommandOptionType.MultipleValue)]
+        [ArgumentOption("-dtoffset", "--long-dtoffset", "", CommandOptionType.MultipleValue)]
         public List<DateTimeOffset> DateTimeOffset { get; set; }
 
-        [ArgumentOption("-guid", "--guid", "", CommandOptionType.MultipleValue)]
+        [ArgumentOption("-guid", "--long-guid", "", CommandOptionType.MultipleValue)]
         public List<Guid> Guid { get; set; }
 
-        [ArgumentOption("-string", "--string", "", CommandOptionType.MultipleValue)]
+        [ArgumentOption("-string", "--long-string", "", CommandOptionType.MultipleValue)]
         public List<string> String { get; set; }
 
-        [ArgumentOption("-enum", "--enum", "", CommandOptionType.MultipleValue)]
+        [ArgumentOption("-enum", "--long-enum", "", CommandOptionType.MultipleValue)]
         public List<Enumeration> Enumeration { get; set; }
     }
 
     public class NullableListArguments
     {
-        [ArgumentOption("-int", "--int", "", CommandOptionType.MultipleValue, 1)]
+        [ArgumentOption("-byte", "--long-byte", "", CommandOptionType.MultipleValue, 1)]
         public List<byte?> Byte { get; set; }
 
-        [ArgumentOption("-ushort", "--ushort", "", CommandOptionType.MultipleValue, 2)]
+        [ArgumentOption("-ushort", "--long-ushort", "", CommandOptionType.MultipleValue, 2)]
         public List<ushort?> UShort { get; set; }
 
-        [ArgumentOption("-uint", "--uint", "", CommandOptionType.MultipleValue, 3)]
+        [ArgumentOption("-uint", "--long-uint", "", CommandOptionType.MultipleValue, 3)]
         public List<uint?> UInt { get; set; }
 
-        [ArgumentOption("-ulong", "--ulong", "", CommandOptionType.MultipleValue, 4)]
+        [ArgumentOption("-ulong", "--long-ulong", "", CommandOptionType.MultipleValue, 4)]
         public List<ulong?> ULong { get; set; }
 
-        [ArgumentOption("-sbyte", "--sbyte", "", CommandOptionType.MultipleValue, 5)]
+        [ArgumentOption("-sbyte", "--long-sbyte", "", CommandOptionType.MultipleValue, 5)]
         public List<sbyte?> SByte { get; set; }
 
-        [ArgumentOption("-ushort", "--ushort", "", CommandOptionType.MultipleValue, 6)]
+        [ArgumentOption("-short", "--long-short", "", CommandOptionType.MultipleValue, 6)]
         public List<ushort?> Short { get; set; }
 
-        [ArgumentOption("-int", "--int", "", CommandOptionType.MultipleValue, 7)]
+        [ArgumentOption("-int", "--long-int", "", CommandOptionType.MultipleValue, 7)]
         public List<int?> Int { get; set; }
 
-        [ArgumentOption("-long", "--long", "", CommandOptionType.MultipleValue, 8)]
+        [ArgumentOption("-long", "--long-long", "", CommandOptionType.MultipleValue, 8)]
         public List<long?> Long { get; set; }
 
-        [ArgumentOption("-float", "--float", "", CommandOptionType.MultipleValue, 9)]
+        [ArgumentOption("-float", "--long-float", "", CommandOptionType.MultipleValue, 9)]
         public List<float?> Float { get; set; }
 
-        [ArgumentOption("-double", "--double", "", CommandOptionType.MultipleValue, 10)]
+        [ArgumentOption("-double", "--long-double", "", CommandOptionType.MultipleValue, 10)]
         public List<double?> Double { get; set; }
 
-        [ArgumentOption("-decimal", "--decimal", "", CommandOptionType.MultipleValue, 11)]
+        [ArgumentOption("-decimal", "--long-decimal", "", CommandOptionType.MultipleValue, 11)]
         public List<decimal?> Decimal { get; set; }
 
-        [ArgumentOption("-datetime", "--datetime", "", CommandOptionType.MultipleValue)]
+        [ArgumentOption("-datetime", "--long-datetime", "", CommandOptionType.MultipleValue)]
         public List<DateTime?> DateTime { get; set; }
 
-        [ArgumentOption("-timespan", "--timespan", "", CommandOptionType.MultipleValue)]
+        [ArgumentOption("-timespan", "--long-timespan", "", CommandOptionType.MultipleValue)]
         public List<TimeSpan?> TimeSpan { get; set; }
 
-        [ArgumentOption("-dtoffset", "--dtoffset", "", CommandOptionType.MultipleValue)]
+        [ArgumentOption("-dtoffset", "--long-dtoffset", "", CommandOptionType.MultipleValue)]
         public List<DateTimeOffset?> DateTimeOffset { get; set; }
 
-        [ArgumentOption("-guid", "--guid", "", CommandOptionType.MultipleValue)]
+        [ArgumentOption("-guid", "--long-guid", "", CommandOptionType.MultipleValue)]
         public List<Guid?> Guid { get; set; }
 
-        [ArgumentOption("-string", "--string", "", CommandOptionType.MultipleValue)]
+        [ArgumentOption("-string", "--long-string", "", CommandOptionType.MultipleValue)]
         public List<string> String { get; set; }
 
-        [ArgumentOption("-enum", "--enum", "", CommandOptionType.MultipleValue, Tests.Enumeration.Value1)]
+        [ArgumentOption("-enum", "--long-enum", "", CommandOptionType.MultipleValue, Tests.Enumeration.Value1)]
         public List<Enumeration?> Enumeration { get; set; }
     }
 
