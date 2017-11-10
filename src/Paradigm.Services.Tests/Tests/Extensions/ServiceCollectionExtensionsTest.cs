@@ -7,9 +7,7 @@ using Paradigm.Services.DependencyInjection.Extensions;
 using Paradigm.Services.DependencyInjection.Extensions.ORM;
 using Paradigm.Services.Exceptions;
 using Paradigm.Services.Repositories.UOW;
-using Paradigm.Services.Tests.Fixtures.Tests;
-using Paradigm.Services.WorkingTasks;
-using Paradigm.Services.WorkingTasks.ORM;
+using Paradigm.Services.Tests.Fixtures.Tests.Extensions;
 
 namespace Paradigm.Services.Tests.Tests.Extensions
 {
@@ -32,7 +30,7 @@ namespace Paradigm.Services.Tests.Tests.Extensions
             serviceCollection.AddWorkingTasks(entryPoint);
             serviceCollection.AddTransactionalWorkingTasks(entryPoint);
             serviceCollection.AddUnitOfWork();
-            serviceCollection.AddExceptionHandler(typeof(Fixtures.Tests.Exceptions));
+            serviceCollection.AddExceptionHandler(typeof(Fixtures.Tests.Extensions.Exceptions));
 
             serviceCollection.Count.Should().Be(20);
         }
@@ -52,7 +50,7 @@ namespace Paradigm.Services.Tests.Tests.Extensions
             serviceCollection.AddProviders(entryPoint);
             serviceCollection.AddWorkingTasks(entryPoint);
             serviceCollection.AddUnitOfWork();
-            serviceCollection.AddExceptionHandler(typeof(Fixtures.Tests.Exceptions));
+            serviceCollection.AddExceptionHandler(typeof(Fixtures.Tests.Extensions.Exceptions));
 
             var serviceProvider = serviceCollection.BuildServiceProvider();
 
@@ -101,7 +99,7 @@ namespace Paradigm.Services.Tests.Tests.Extensions
             var entryPoint = typeof(ServiceCollectionExtensionsTest).Assembly;
 
             serviceCollection.AddScoped<IDatabaseConnector, MySqlDatabaseConnector>();
-            serviceCollection.AddParadimFramework(typeof(Fixtures.Tests.Exceptions), entryPoint);
+            serviceCollection.AddParadimFramework(typeof(Fixtures.Tests.Extensions.Exceptions), entryPoint);
 
             serviceCollection.Count.Should().Be(20);
             var serviceProvider = serviceCollection.BuildServiceProvider();

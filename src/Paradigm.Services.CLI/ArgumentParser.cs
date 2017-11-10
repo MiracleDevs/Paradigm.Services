@@ -5,7 +5,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using Microsoft.Extensions.CommandLineUtils;
-using Paradigm.Core.Extensions;
 
 namespace Paradigm.Services.CLI
 {
@@ -72,6 +71,14 @@ namespace Paradigm.Services.CLI
         private Type ArgumentsType { get; set; }
 
         /// <summary>
+        /// Gets or sets the arguments.
+        /// </summary>
+        /// <value>
+        /// The arguments.
+        /// </value>
+        public object Arguments { get; set; }
+
+        /// <summary>
         /// Gets or sets the command line application parser.
         /// </summary>
         /// <value>
@@ -113,7 +120,7 @@ namespace Paradigm.Services.CLI
         /// <typeparam name="T">A type decorated with the options</typeparam>
         /// <param name="args">The console line arguments arguments.</param>
         /// <returns></returns>
-        public void ParseArguments<T>(string[] args) where T : class
+        public T ParseArguments<T>(string[] args) where T : class
         {
             this.LineArguments = args;
             this.CommandLineApplication = new CommandLineApplication(false);
@@ -138,6 +145,18 @@ namespace Paradigm.Services.CLI
 
                 this.Options.Add(property, new Option(argumentOptionAttribute, this.CommandLineApplication.Option(argumentOptionAttribute.GetTemplate(property.Name), argumentOptionAttribute.Description, argumentOptionAttribute.Type)));
             }
+
+            var arguments = default(T);
+
+            this.CommandLineApplication.OnExecute(() =>
+            {
+                arguments = this.GetTypedArguments<T>();
+                return 0;
+            });
+
+            this.CommandLineApplication.Execute(args);
+            this.Arguments = arguments;
+            return arguments;
         }
 
         /// <summary>
@@ -152,26 +171,6 @@ namespace Paradigm.Services.CLI
             this.LongVersion = longVersion;
         }
 
-
-        public int Run(Action<Type, object> onRun = null, Action<Exception> onError = null)
-        {
-            this.CommandLineApplication.OnExecute(() =>
-            {
-                try
-                {
-                    onRun?.Invoke(this.ArgumentsType, this.GetTypedArguments());
-                    return 0;
-                }
-                catch (Exception ex)
-                {
-                    onError?.Invoke(ex);
-                    return -1;
-                }
-            });
-
-            return this.CommandLineApplication.Execute(this.LineArguments);
-        }
-
         #endregion
 
         #region Private Methods
@@ -180,12 +179,12 @@ namespace Paradigm.Services.CLI
         /// Configures the argument object with the command line arguments.
         /// </summary>
         /// <exception cref="System.Exception">Couldn't create an instance of argument object provided.</exception>
-        private object GetTypedArguments()
+        private T GetTypedArguments<T>()
         {
             if (this.CommandLineApplication == null || this.Options == null)
-                return null;
+                return default(T);
 
-            var arguments = Activator.CreateInstance(this.ArgumentsType);
+            var arguments = Activator.CreateInstance<T>();
             var exceptions = new List<Exception>();
 
             if (arguments == null)

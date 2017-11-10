@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Tests\Exceptions.Designer.cs">
+    <Compile Update="Tests\Extensions\Exceptions.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Exceptions.resx</DependentUpon>
@@ -31,7 +31,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Tests\Exceptions.resx">
+    <EmbeddedResource Update="Tests\Extensions\Exceptions.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Exceptions.Designer.cs</LastGenOutput>
     </EmbeddedResource>

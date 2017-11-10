@@ -3,6 +3,7 @@ using NUnit.Framework;
 using Paradigm.Core.Mapping;
 using Paradigm.Services.Mapping.Extensions;
 using Paradigm.Services.Tests.Fixtures.Tests;
+using Paradigm.Services.Tests.Fixtures.Tests.Extensions;
 
 namespace Paradigm.Services.Tests.Tests.Extensions
 {

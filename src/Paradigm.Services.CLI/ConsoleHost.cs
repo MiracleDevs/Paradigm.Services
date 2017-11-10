@@ -1,5 +1,7 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -9,7 +11,7 @@ namespace Paradigm.Services.CLI
     /// Provides convenience methods to create a console application.
     /// </summary>
     public class ConsoleHost
-    {     
+    {
         #region Properties
 
         /// <summary>
@@ -18,7 +20,7 @@ namespace Paradigm.Services.CLI
         /// <value>
         /// The startup program.
         /// </value>
-        public IStartup Startup { get; private set; }
+        public object Startup { get; private set; }
 
         /// <summary>
         /// Gets the service collection.
@@ -127,18 +129,28 @@ namespace Paradigm.Services.CLI
         /// <typeparam name="T">Type of the startup program.</typeparam>
         /// <returns></returns>
         /// <exception cref="System.Exception">The startup couldn't be created.</exception>
-        public ConsoleHost UseStartup<T>() where T : IStartup
+        public ConsoleHost UseStartup<T>()
         {
-            if (this.ConfigurationRoot != null)
-                this.Startup = Activator.CreateInstance(typeof(T), this.ConfigurationRoot) as IStartup;
-            else
-                this.Startup = Activator.CreateInstance(typeof(T)) as IStartup;
+            var type = typeof(T);
+            var constructorInfo = type.GetConstructor(new[] { typeof(IConfigurationRoot) }) ??
+                                  type.GetConstructor(new[] { typeof(IConfiguration) }) ??
+                                  type.GetConstructor(new Type[] { });
+
+            if (constructorInfo == null)
+                throw new Exception($"Couldn't find a suitable constructor for the startup class '{type.Name}'.");
+
+            this.Startup = constructorInfo.Invoke(constructorInfo.GetParameters().Any()
+                ? new object[] { this.ConfigurationRoot }
+                : new object[0]);
 
             if (this.Startup == null)
                 throw new Exception("The startup couldn't be created.");
 
             this.ServiceCollection = new ServiceCollection();
-            this.Startup.ConfigureServices(this.ServiceCollection);
+
+            var configureMethodInfo = type.GetMethod("ConfigureServices", new[] { typeof(IServiceCollection) });
+            configureMethodInfo?.Invoke(this.Startup, new object[] { this.ServiceCollection });
+
             return this;
         }
 
@@ -151,10 +163,24 @@ namespace Paradigm.Services.CLI
         {
             try
             {
-                if (this.ArgumentParser != null)
-                    return this.ArgumentParser.Run((t, a) => this.ServiceCollection.AddSingleton(t, a), onError);
+                if(this.Startup == null)
+                    throw new Exception("The startup class couldn't be constructed and can not run.");
 
-                this.RunStartup();
+                this.ServiceProvider = this.ServiceCollection.BuildServiceProvider();
+                var runMethodInfo = this.Startup.GetType().GetMethod("Run", new []{ typeof(IServiceProvider) });
+
+                if (runMethodInfo == null)
+                    throw new Exception($"Couldn't find a suitable run method for the startup class '{this.Startup.GetType().Name}'.");
+
+                if (runMethodInfo.ReturnType == typeof(Task))
+                {
+                    ((Task)runMethodInfo.Invoke(this.Startup, new object[] { this.ServiceProvider })).Wait();
+                }
+                else
+                {
+                    runMethodInfo.Invoke(this.Startup, new object[] { this.ServiceProvider });
+                }
+
                 return 0;
             }
             catch (Exception ex)
@@ -162,19 +188,6 @@ namespace Paradigm.Services.CLI
                 onError?.Invoke(ex);
                 return -1;
             }
-        }
-
-        #endregion
-
-        #region Private Methods
-
-        /// <summary>
-        /// Creates the service provider and runs the startup.
-        /// </summary>
-        private void RunStartup()
-        {
-            this.ServiceProvider = this.ServiceCollection.BuildServiceProvider();
-            this.Startup.Run(this.ServiceProvider);
         }
 
         #endregion

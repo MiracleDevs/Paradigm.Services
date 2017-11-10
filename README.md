@@ -29,6 +29,23 @@ Base libraries for service and webapi projects, containing support for different
 Change log
 ---
 
+Version `2.0.11`
+- Removed IStartup interface. Now startup classes don't require implemeting interfaces,
+  the ConsoleHost will reflect the class to call the correct methods:
+  - `Startup()`
+  - `Startup(IConfiguration configuration)`
+  - `Startup(IConfigurationRoot configuration)`
+  - `void ConfigureServices(IServiceCollection services)`
+  - `void Run(IServiceProvider provider)`
+  - `Task Run(IServiceProvider provider)`
+- Argument parsing is done on ParseArguments method, before was done on Run before executing run method.
+- Added new `ConsoleHost` tests.
+- Updated `ArgumentParser` tests.
+- Configured test suite to travis file.
+
+- Fixed tests not testing some cases and giving false positives.
+
+
 Version `2.0.10`
 - Fixed errors when parsing timespans, guids, etc.
 - Fixed tests not testing some cases and giving false positives.
