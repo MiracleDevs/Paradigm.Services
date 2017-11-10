@@ -29,6 +29,11 @@ Base libraries for service and webapi projects, containing support for different
 Change log
 ---
 
+Version `2.0.12`
+- Registers the Argument class in the service collection as a singleton if the `ParseArguments<T>` method
+  was called. The method should be called before the `UseStartup` or the arguments won't be registered.
+- Added more tests.
+
 Version `2.0.11`
 - Removed IStartup interface. Now startup classes don't require implemeting interfaces,
   the ConsoleHost will reflect the class to call the correct methods:
@@ -42,7 +47,6 @@ Version `2.0.11`
 - Added new `ConsoleHost` tests.
 - Updated `ArgumentParser` tests.
 - Configured test suite to travis file.
-
 - Fixed tests not testing some cases and giving false positives.
 
 

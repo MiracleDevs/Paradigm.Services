@@ -148,6 +148,9 @@ namespace Paradigm.Services.CLI
 
             this.ServiceCollection = new ServiceCollection();
 
+            if (this.ArgumentParser?.Arguments != null)
+                this.ServiceCollection.AddSingleton(this.ArgumentParser.ArgumentsType, this.ArgumentParser.Arguments);
+
             var configureMethodInfo = type.GetMethod("ConfigureServices", new[] { typeof(IServiceCollection) });
             configureMethodInfo?.Invoke(this.Startup, new object[] { this.ServiceCollection });
 

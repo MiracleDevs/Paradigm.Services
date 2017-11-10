@@ -1,5 +1,6 @@
 ﻿using System;
 using FluentAssertions;
+using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 using Paradigm.Services.CLI;
 using Paradigm.Services.Tests.Fixtures.Tests;
@@ -78,6 +79,34 @@ namespace Paradigm.Services.Tests.Tests.CLI
             (consoleHost.Startup as TwoConfigureStartup).Configuration.Should().BeNull();
             (consoleHost.Startup as TwoConfigureStartup).ServiceCollection.Should().NotBeNull();
         }
+
+        [TestCase]
+        public void ShouldConfigureArguments()
+        {
+            var args = new[] { "-byte", "1", "-ushort", "2", "-uint", "3", "-ulong", "4", "-sbyte", "5", "-short", "6", "-int", "7", "-long", "8", "-float", "9", "-double", "10", "-decimal", "11", "-datetime", "12/12/2012 12:12:12", "-timespan", "12:12:12", "-dtoffset", "12/12/2012 12:12:12", "-guid", "7deca82b-b15e-43e3-a6a3-ea771362b1ab", "-string", "hello world", "-enum", "Value1" };
+            var consoleHost = ConsoleHost.Create().ParseArguments<Arguments>(args).UseStartup<SyncStartup>();
+            consoleHost.Run();
+            var arguments = (consoleHost.Startup as SyncStartup).ServiceProvider.GetService<Arguments>();
+            arguments.Should().NotBeNull();
+            arguments.Byte.Should().Be(1);
+            arguments.UShort.Should().Be(2);
+            arguments.UInt.Should().Be(3);
+            arguments.ULong.Should().Be(4);
+            arguments.SByte.Should().Be(5);
+            arguments.Short.Should().Be(6);
+            arguments.Int.Should().Be(7);
+            arguments.Long.Should().Be(8);
+            arguments.Float.Should().Be(9);
+            arguments.Double.Should().Be(10);
+            arguments.Decimal.Should().Be(11);
+            arguments.DateTime.Should().Be(new DateTime(2012, 12, 12, 12, 12, 12));
+            arguments.TimeSpan.Should().Be(new TimeSpan(0, 12, 12, 12));
+            arguments.DateTimeOffset.Should().Be(new DateTime(2012, 12, 12, 12, 12, 12));
+            arguments.Guid.Should().Be(Guid.Parse("7deca82b-b15e-43e3-a6a3-ea771362b1ab"));
+            arguments.String.Should().Be("hello world");
+            arguments.Enumeration.Should().Be(Enumeration.Value1);
+        }
+
 
         [TestCase]
         public void ShouldRunSyncMethod()

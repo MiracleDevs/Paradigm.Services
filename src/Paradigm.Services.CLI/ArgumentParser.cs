@@ -68,7 +68,7 @@ namespace Paradigm.Services.CLI
         /// <value>
         /// The type of the arguments.
         /// </value>
-        private Type ArgumentsType { get; set; }
+        public Type ArgumentsType { get; private set; }
 
         /// <summary>
         /// Gets or sets the arguments.
@@ -76,7 +76,7 @@ namespace Paradigm.Services.CLI
         /// <value>
         /// The arguments.
         /// </value>
-        public object Arguments { get; set; }
+        public object Arguments { get; private set; }
 
         /// <summary>
         /// Gets or sets the command line application parser.
