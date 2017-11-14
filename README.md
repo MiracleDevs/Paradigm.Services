@@ -29,6 +29,10 @@ Base libraries for service and webapi projects, containing support for different
 Change log
 ---
 
+Version `2.0.13`
+- Updated nuget dependencies.
+- Removed dependencies on a parameterless constructor for domain entities.
+
 Version `2.0.12`
 - Registers the Argument class in the service collection as a singleton if the `ParseArguments<T>` method
   was called. The method should be called before the `UseStartup` or the arguments won't be registered.

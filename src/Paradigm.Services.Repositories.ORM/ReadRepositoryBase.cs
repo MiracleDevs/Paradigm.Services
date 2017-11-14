@@ -14,7 +14,7 @@ using Paradigm.ORM.Data.DatabaseAccess.Generic;
 namespace Paradigm.Services.Repositories.ORM
 {
     public abstract partial class ReadRepositoryBase<TEntity, TId, TDatabaseAccess> : IReadRepository<TEntity, TId>
-        where TEntity : DomainBase, new()
+        where TEntity : DomainBase
         where TDatabaseAccess : IDatabaseAccess<TEntity>
     {
         #region Properties

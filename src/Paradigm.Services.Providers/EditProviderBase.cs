@@ -20,7 +20,7 @@ namespace Paradigm.Services.Providers
         ReadProviderBase<TView, TViewRepository, TId>,
         IEditProvider<TInterface, TDomain, TView, TId>
         where TInterface : IDomainInterface
-        where TDomain : DomainBase<TInterface, TDomain>, TInterface, new()
+        where TDomain : DomainBase<TInterface, TDomain>, TInterface
         where TView : DomainBase
         where TDomainRepository : IEditRepository<TDomain, TId>
         where TViewRepository : IReadRepository<TView, TId>
