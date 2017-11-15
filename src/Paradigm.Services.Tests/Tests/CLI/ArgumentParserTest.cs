@@ -2,13 +2,12 @@
 using FluentAssertions;
 using NUnit.Framework;
 using Paradigm.Services.CLI;
-using Paradigm.Services.Tests.Fixtures.Tests;
 using Paradigm.Services.Tests.Fixtures.Tests.CLI;
 
 namespace Paradigm.Services.Tests.Tests.CLI
 {
     [TestFixture]
-    public class ArgumentParserTests
+    public class ArgumentParserTest
     {
         #region Not Nullable
 
@@ -48,7 +47,7 @@ namespace Paradigm.Services.Tests.Tests.CLI
             Exception exception = null;
             try
             {
-                parser.ParseArguments<Arguments>("".Split(" "));
+                parser.ParseArguments<Arguments>(new string[0]);
             }
             catch (Exception ex)
             {
@@ -58,6 +57,34 @@ namespace Paradigm.Services.Tests.Tests.CLI
             exception.Should().NotBeNull();
             exception.GetType().Should().Be(typeof(AggregateException));
             (exception as AggregateException).InnerExceptions.Count.Should().Be(16);
+        }
+
+        [TestCase]
+        public void ShouldSetDefaultValuesOfNotNullArguments()
+        {
+            var parser = new ArgumentParser();
+
+            parser.ParseArguments<DefaultArguments>(new string[0]);
+
+            var args = parser.Arguments as DefaultArguments;
+
+            args.Byte.Should().Be(1);
+            args.UShort.Should().Be(2);
+            args.UInt.Should().Be(3);
+            args.ULong.Should().Be(4);
+            args.SByte.Should().Be(5);
+            args.Short.Should().Be(6);
+            args.Int.Should().Be(7);
+            args.Long.Should().Be(8);
+            args.Float.Should().Be(9);
+            args.Double.Should().Be(10);
+            args.Decimal.Should().Be(11);
+            args.DateTime.Should().Be(new DateTime(2012, 12, 12, 12, 12, 12));
+            args.TimeSpan.Should().Be(new TimeSpan(0, 12, 12, 12));
+            args.DateTimeOffset.Should().Be(new DateTime(2012, 12, 12, 12, 12, 12));
+            args.Guid.Should().Be(Guid.Parse("7deca82b-b15e-43e3-a6a3-ea771362b1ab"));
+            args.String.Should().Be("hello world");
+            args.Enumeration.Should().Be(Enumeration.Value1);
         }
 
         #endregion
@@ -97,7 +124,7 @@ namespace Paradigm.Services.Tests.Tests.CLI
         {
             var parser = new ArgumentParser();
 
-            parser.ParseArguments<NullableArguments>("".Split(" "));
+            parser.ParseArguments<NullableArguments>(new string[0]);
 
             var args = parser.Arguments as NullableArguments;
 

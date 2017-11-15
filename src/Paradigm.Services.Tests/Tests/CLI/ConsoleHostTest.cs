@@ -3,19 +3,18 @@ using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 using Paradigm.Services.CLI;
-using Paradigm.Services.Tests.Fixtures.Tests;
 using Paradigm.Services.Tests.Fixtures.Tests.CLI;
 
 namespace Paradigm.Services.Tests.Tests.CLI
 {
     [TestFixture]
-    public class ConsoleHostTests
+    public class ConsoleHostTest
     {
         [TestCase]
         public void ShouldCreateNewInstance()
         {
             ConsoleHost.Create().Should().NotBeNull();
-        } 
+        }
 
         [TestCase]
         public void ShouldAcceptArguments()

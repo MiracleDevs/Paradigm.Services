@@ -250,11 +250,20 @@ namespace Paradigm.Services.CLI
 
             if (value == null)
             {
-                return allowNulls
-                    ? (innerType != null && defaultValue != null 
-                        ? Convert.ChangeType(defaultValue, innerType) 
-                        : defaultValue)
-                    : throw new Exception($"Parameter '{template}' is mandatory.");
+                if (allowNulls)
+                    if (innerType != null && defaultValue != null)
+                        return Convert.ChangeType(defaultValue, innerType);
+                    else
+                        return defaultValue;
+
+                if (defaultValue != null)
+                {
+                    value = defaultValue.ToString();
+                }
+                else
+                {
+                    throw new Exception($"Parameter '{template}' is mandatory.");
+                }
             }
 
             if (innerType != null && innerType.IsEnum)

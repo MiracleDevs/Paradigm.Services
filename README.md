@@ -29,14 +29,22 @@ Base libraries for service and webapi projects, containing support for different
 Change log
 ---
 
+Version `2.0.14`
+- Updated nuget dependencies.
+- Modified the `ArgumentParser` to allow not nullable types to receive default values if no value was provided in the command line.
+- Added new tests for the new functionality.
+
+
 Version `2.0.13`
 - Updated nuget dependencies.
 - Removed dependencies on a parameterless constructor for domain entities.
+
 
 Version `2.0.12`
 - Registers the Argument class in the service collection as a singleton if the `ParseArguments<T>` method
   was called. The method should be called before the `UseStartup` or the arguments won't be registered.
 - Added more tests.
+
 
 Version `2.0.11`
 - Removed IStartup interface. Now startup classes don't require implemeting interfaces,

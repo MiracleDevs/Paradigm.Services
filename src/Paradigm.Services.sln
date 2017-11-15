@@ -43,13 +43,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paradigm.Services.Tests", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paradigm.Services.Tests.Fixtures", "Paradigm.Services.Tests.Fixtures\Paradigm.Services.Tests.Fixtures.csproj", "{E87EF717-BDAB-49C9-8271-7ABB736E6677}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paradigm.Services.CLI", "Paradigm.Services.CLI\Paradigm.Services.CLI.csproj", "{363C3F1A-68A1-466D-B949-9A20B4ED1A25}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paradigm.Services.CLI", "Paradigm.Services.CLI\Paradigm.Services.CLI.csproj", "{363C3F1A-68A1-466D-B949-9A20B4ED1A25}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paradigm.Services.DependencyInjection.Extensions", "Paradigm.Services.DependencyInjection.Extensions\Paradigm.Services.DependencyInjection.Extensions.csproj", "{24B7B886-D746-45C8-982B-EB45E61291B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paradigm.Services.DependencyInjection.Extensions", "Paradigm.Services.DependencyInjection.Extensions\Paradigm.Services.DependencyInjection.Extensions.csproj", "{24B7B886-D746-45C8-982B-EB45E61291B4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paradigm.Services.DependencyInjection.Extensions.ORM", "Paradigm.Services.DependencyInjection.Extensions.ORM\Paradigm.Services.DependencyInjection.Extensions.ORM.csproj", "{62846624-CFB1-443A-AC8F-4F8266ABF271}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paradigm.Services.DependencyInjection.Extensions.ORM", "Paradigm.Services.DependencyInjection.Extensions.ORM\Paradigm.Services.DependencyInjection.Extensions.ORM.csproj", "{62846624-CFB1-443A-AC8F-4F8266ABF271}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paradigm.Services.Mapping.Extensions", "Paradigm.Services.Mapping.Extensions\Paradigm.Services.Mapping.Extensions.csproj", "{D9D57807-3E89-425A-9F13-7CA0CCDBCB39}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paradigm.Services.Mapping.Extensions", "Paradigm.Services.Mapping.Extensions\Paradigm.Services.Mapping.Extensions.csproj", "{D9D57807-3E89-425A-9F13-7CA0CCDBCB39}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
