@@ -14,9 +14,25 @@ namespace Paradigm.Services.Repositories.UOW
     {
         #region Properties
 
+        /// <summary>
+        /// Gets the list of current repositories registered
+        /// in the current UnitOfWork
+        /// </summary>
         protected List<IRepository> Repositories { get; }
 
+        /// <summary>
+        /// Flag to track if this UnitOfWork is being disposed
+        /// </summary>
         public bool Disposing { get; private set; }
+
+        #endregion
+
+        #region Private Fields
+
+        /// <summary>
+        /// Lock used to make the list of repositories thread-safe
+        /// </summary>
+        private readonly object _repositoriesLock = new object();
 
         #endregion
 
@@ -47,12 +63,15 @@ namespace Paradigm.Services.Repositories.UOW
 
         public void Reset()
         {
-            foreach (var repository in this.Repositories)
+            lock (_repositoriesLock)
             {
-                repository.Dispose();
-            }
+                foreach (var repository in this.Repositories)
+                {
+                    repository.Dispose();
+                }
 
-            this.Repositories.Clear();
+                this.Repositories.Clear();
+            }
         }
 
         public void RegisterRepository(IRepository repository)
@@ -60,16 +79,21 @@ namespace Paradigm.Services.Repositories.UOW
             if (this.Disposing)
                 throw new InvalidOperationException("Can't add a Repository to a Unit Of Work while the Unit of Work is being disposed.");
 
-            this.Repositories.Add(repository);
+            lock (_repositoriesLock)
+                this.Repositories.Add(repository);
         }
 
         public void CommitChanges()
         {
-            var commiteable = this.Repositories.Where(x => x is ICommiteable).Cast<ICommiteable>();
-
-            foreach(var repository in commiteable)
+            // By now locking all the repositories prevents parallel CommitChanges (revisit this later)
+            lock (_repositoriesLock)
             {
-                repository.CommitChanges();
+                var commiteable = this.Repositories.Where(x => x is ICommiteable).Cast<ICommiteable>();
+
+                foreach (var repository in commiteable)
+                {
+                    repository.CommitChanges();
+                }
             }
         }
 

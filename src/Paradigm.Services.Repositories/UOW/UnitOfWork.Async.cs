@@ -4,6 +4,7 @@
 * Licensed under MIT(https://github.com/MiracleDevs/Paradigm.Services/blob/master/LICENSE)
 */
 
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,12 +16,17 @@ namespace Paradigm.Services.Repositories.UOW
 
         public async Task CommitChangesAsync()
         {
-            var commiteable = this.Repositories.Where(x => x is ICommiteable).Cast<ICommiteable>();
-
-            foreach(var repository in commiteable)
+            // By now locking all the repositories prevents parallel CommitChanges (revisit this later)
+            lock (_repositoriesLock)
             {
-                await repository.CommitChangesAsync();
+                var commiteable = this.Repositories.Where(x => x is ICommiteable).Cast<ICommiteable>();
+
+                foreach (var repository in commiteable)
+                {
+                    repository.CommitChanges();
+                }
             }
+            await Task.CompletedTask;
         }
 
         #endregion
