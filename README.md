@@ -29,6 +29,10 @@ Base libraries for service and webapi projects, containing support for different
 Change log
 ---
 
+Version `2.0.15`
+- Updated the UnitOfWork to be thread safe. The only caveat is the CommitChanges is locked and can not be executed in parallel.
+  This may change in the future if required.
+
 Version `2.0.14`
 - Updated nuget dependencies.
 - Modified the `ArgumentParser` to allow not nullable types to receive default values if no value was provided in the command line.

@@ -5,14 +5,14 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Description>This library contains useful classes to work with task units that needs to work with transactions, and repeat the work if couldn't be completed. Contains specific implementations for Entity Framework.</Description>
     <Copyright>Miracle Devs</Copyright>
-    <PackageProjectUrl>http://www.miracledevs.com</PackageProjectUrl>
+    <PackageProjectUrl>http://www.paradigm.net.co/</PackageProjectUrl>
     <Authors>Miracle Devs</Authors>
     <Company>Miracle Devs</Company>
     <PackageLicenseUrl>https://github.com/MiracleDevs/Paradigm.Services/blob/master/LICENSE</PackageLicenseUrl>
     <PackageIconUrl>https://avatars2.githubusercontent.com/u/8192926</PackageIconUrl>
     <RepositoryUrl>https://github.com/MiracleDevs/Paradigm.Services.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <Version>2.0.14</Version>
+    <Version>2.0.15</Version>
     <Product>Paradigm Services</Product>
   </PropertyGroup>
 
