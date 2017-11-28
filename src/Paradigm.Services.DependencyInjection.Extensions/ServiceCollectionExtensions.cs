@@ -111,17 +111,26 @@ namespace Paradigm.Services.DependencyInjection.Extensions
             if (serviceCollection == null)
                 throw new ArgumentNullException(nameof(serviceCollection));
 
-            serviceCollection.AddTransient<IWorkTask, WorkTask>();
-            var registrableTypes = GetTypesThatInherit(typeof(IWorkTask), assembly);
+            serviceCollection.AddWorkingTasksOfType<IWorkTask>(typeof(WorkTask), assembly);
+            serviceCollection.AddWorkingTasksOfType<IParallelWorkTask>(typeof(ParallelWorkTask), assembly);
+        }
+
+        private static void AddWorkingTasksOfType<T>(this IServiceCollection serviceCollection, Type implementationType, Assembly assembly)
+        {
+            if (serviceCollection == null)
+                throw new ArgumentNullException(nameof(serviceCollection));
+
+            serviceCollection.AddTransient(typeof(T), implementationType);
+            var registrableTypes = GetTypesThatInherit(typeof(T), assembly);
 
             foreach (var type in registrableTypes)
             {
-                var interfaceType = type.GetInterfaces().Except(type.BaseType.GetInterfaces()).FirstOrDefault(x => typeof(IWorkTask).IsAssignableFrom(x));
+                var registrableInterfaceType = type.GetInterfaces().Except(type.BaseType.GetInterfaces()).FirstOrDefault(x => typeof(T).IsAssignableFrom(x));
 
-                if (interfaceType == null)
+                if (registrableInterfaceType == null)
                     continue;
 
-                serviceCollection.AddTransient(interfaceType, type);
+                serviceCollection.AddTransient(registrableInterfaceType, type);
                 serviceCollection.AddTransient(type);
             }
         }

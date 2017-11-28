@@ -111,12 +111,14 @@ namespace Paradigm.Services.CLI
         /// </summary>
         /// <param name="fileName">Name of the file.</param>
         /// <param name="basePath">The base path.</param>
+        /// <param name="optional">Whether the file is optional</param>
+        /// <param name="reloadOnChange">Whether the configuration should be reloaded if the file changes</param>
         /// <returns></returns>
-        public ConsoleHost UseConfiguration(string fileName, string basePath = null)
+        public ConsoleHost UseConfiguration(string fileName, string basePath = null, bool optional = false, bool reloadOnChange = true)
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(basePath ?? Directory.GetCurrentDirectory())
-                .AddJsonFile(fileName);
+                .AddJsonFile(fileName, optional, reloadOnChange);
 
             this.ConfigurationRoot = builder.Build();
 
