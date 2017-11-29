@@ -28,10 +28,16 @@ Base libraries for service and webapi projects, containing support for different
 
 Change log
 ---
+Version `2.0.16`
+- Updated to the latest version of the Paradigm.ORM.
+- Added some new options to the ConsoleHost to set configuration reload.
+- Added a new type of WorkTask called ParallelWorkTask. As the name implies, allows to run working task in parallel.
+
 
 Version `2.0.15`
 - Updated the UnitOfWork to be thread safe. The only caveat is the CommitChanges is locked and can not be executed in parallel.
   This may change in the future if required.
+
 
 Version `2.0.14`
 - Updated nuget dependencies.
