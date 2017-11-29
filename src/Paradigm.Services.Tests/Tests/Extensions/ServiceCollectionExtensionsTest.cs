@@ -13,7 +13,7 @@ namespace Paradigm.Services.Tests.Tests.Extensions
 {
     [TestFixture]
     public class ServiceCollectionExtensionsTest
-    {        
+    {
         [TestCase]
         public void ShouldRegisterObjects()
         {
@@ -32,7 +32,7 @@ namespace Paradigm.Services.Tests.Tests.Extensions
             serviceCollection.AddUnitOfWork();
             serviceCollection.AddExceptionHandler(typeof(Fixtures.Tests.Extensions.Exceptions));
 
-            serviceCollection.Count.Should().Be(20);
+            serviceCollection.Count.Should().Be(21);
         }
 
         [TestCase]
@@ -101,7 +101,7 @@ namespace Paradigm.Services.Tests.Tests.Extensions
             serviceCollection.AddScoped<IDatabaseConnector, MySqlDatabaseConnector>();
             serviceCollection.AddParadimFramework(typeof(Fixtures.Tests.Extensions.Exceptions), entryPoint);
 
-            serviceCollection.Count.Should().Be(20);
+            serviceCollection.Count.Should().Be(21);
             var serviceProvider = serviceCollection.BuildServiceProvider();
 
             var domainObject = serviceProvider.GetService<DomainObject1>();
