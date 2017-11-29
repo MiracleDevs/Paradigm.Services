@@ -43,7 +43,7 @@ namespace Paradigm.Services.Repositories.ORM
 
         public void Dispose()
         {
-            this.DatabaseAccess.Dispose();
+            /* Database access are not disposable */
         }
 
         public virtual TEntity GetById(TId id)

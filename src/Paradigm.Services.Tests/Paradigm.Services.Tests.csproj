@@ -9,7 +9,7 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0" />
     <PackageReference Include="NUnit" Version="3.9.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.9.0" />
-    <PackageReference Include="Paradigm.ORM.Data.MySql" Version="2.1.6" />
+    <PackageReference Include="Paradigm.ORM.Data.MySql" Version="2.2.0" />
   </ItemGroup>
 
   <ItemGroup>
