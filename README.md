@@ -28,6 +28,11 @@ Base libraries for service and webapi projects, containing support for different
 
 Change log
 ---
+
+Version `2.0.17`
+- Updated to the latest version of the Paradigm.ORM.
+
+
 Version `2.0.16`
 - Updated to the latest version of the Paradigm.ORM.
 - Added some new options to the ConsoleHost to set configuration reload.
