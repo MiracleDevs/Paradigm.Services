@@ -29,6 +29,23 @@ namespace Paradigm.Services.Repositories.ORM
 
         #region Constructor
 
+        protected ReadRepositoryBase(IServiceProvider serviceProvider)
+        {
+            this.ServiceProvider = serviceProvider;
+            this.DatabaseAccess = serviceProvider.GetService<TDatabaseAccess>();
+            this.UnitOfWork = serviceProvider.GetService<IUnitOfWork>();
+            this.UnitOfWork?.RegisterRepository(this);
+        }
+
+
+        protected ReadRepositoryBase(IServiceProvider serviceProvider, TDatabaseAccess databaseAccess)
+        {
+            this.ServiceProvider = serviceProvider;
+            this.DatabaseAccess = databaseAccess;
+            this.UnitOfWork = serviceProvider.GetService<IUnitOfWork>();
+            this.UnitOfWork?.RegisterRepository(this);
+        }
+
         protected ReadRepositoryBase(IServiceProvider serviceProvider, TDatabaseAccess databaseAccess, IUnitOfWork unitOfWork)
         {
             this.ServiceProvider = serviceProvider;

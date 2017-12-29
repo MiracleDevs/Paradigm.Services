@@ -19,6 +19,14 @@ namespace Paradigm.Services.Repositories.EntityFramework
     {
         #region Constructor
 
+        protected EditRepositoryBase(IServiceProvider serviceProvider) : base(serviceProvider)
+        {
+        }
+
+        protected EditRepositoryBase(IServiceProvider serviceProvider, TContext context) : base(serviceProvider, context)
+        {
+        }
+
         protected EditRepositoryBase(IServiceProvider serviceProvider, TContext context, IUnitOfWork unitOfWork) : base(serviceProvider, context, unitOfWork)
         {
         }
@@ -101,7 +109,7 @@ namespace Paradigm.Services.Repositories.EntityFramework
             if (entity == null)
                 throw new ArgumentNullException(nameof(entity));
 
-            entity.BeforeEdit();       
+            entity.BeforeEdit();
             entity.BeforeSave();
             var entityEntry = this.GetEntityEntry(entity);
 

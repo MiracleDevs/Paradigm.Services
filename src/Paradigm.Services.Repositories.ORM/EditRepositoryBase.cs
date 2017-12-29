@@ -19,6 +19,14 @@ namespace Paradigm.Services.Repositories.ORM
     {
         #region Constructor
 
+        protected EditRepositoryBase(IServiceProvider serviceProvider) : base(serviceProvider)
+        {
+        }
+
+        protected EditRepositoryBase(IServiceProvider serviceProvider, TDatabaseAccess databaseAccess) : base(serviceProvider, databaseAccess)
+        {
+        }
+
         protected EditRepositoryBase(IServiceProvider serviceProvider, TDatabaseAccess databaseAccess, IUnitOfWork unitOfWork) : base(serviceProvider, databaseAccess, unitOfWork)
         {
         }
@@ -29,7 +37,7 @@ namespace Paradigm.Services.Repositories.ORM
 
         public virtual void Add(TEntity entity)
         {
-            entity.BeforeAdd(); 
+            entity.BeforeAdd();
             entity.BeforeSave();
             this.DatabaseAccess.Insert(entity);
             entity.AfterAdd();

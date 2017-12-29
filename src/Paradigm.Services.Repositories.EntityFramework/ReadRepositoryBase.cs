@@ -21,19 +21,39 @@ namespace Paradigm.Services.Repositories.EntityFramework
     {
         #region Properties
 
-        protected IServiceProvider ServiceProvider { get; private set; }
+        protected IServiceProvider ServiceProvider { get;  }
 
-        protected TContext Context { get; private set; }
+        protected TContext Context { get; }
+
+        protected IUnitOfWork UnitOfWork { get; }
+
 
         #endregion
 
         #region Constructor
 
+        protected ReadRepositoryBase(IServiceProvider serviceProvider)
+        {
+            this.ServiceProvider = serviceProvider;
+            this.Context = this.ServiceProvider.GetService<TContext>();
+            this.UnitOfWork = this.ServiceProvider.GetService<IUnitOfWork>();
+            this.UnitOfWork?.RegisterRepository(this);
+        }
+
+        protected ReadRepositoryBase(IServiceProvider serviceProvider, TContext context)
+        {
+            this.ServiceProvider = serviceProvider;
+            this.Context = context;
+            this.UnitOfWork = this.ServiceProvider.GetService<IUnitOfWork>();
+            this.UnitOfWork?.RegisterRepository(this);
+        }
+
         protected ReadRepositoryBase(IServiceProvider serviceProvider, TContext context, IUnitOfWork unitOfWork) 
         {
             this.ServiceProvider = serviceProvider;
             this.Context = context;
-            unitOfWork?.RegisterRepository(this);
+            this.UnitOfWork = unitOfWork;
+            this.UnitOfWork?.RegisterRepository(this);
         }
 
         #endregion
@@ -43,7 +63,6 @@ namespace Paradigm.Services.Repositories.EntityFramework
         public virtual void Dispose()
         {
             this.Context?.Dispose();
-            this.Context = null;
         }
 
         #endregion

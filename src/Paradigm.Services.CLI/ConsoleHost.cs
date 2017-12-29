@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
@@ -54,6 +53,14 @@ namespace Paradigm.Services.CLI
         /// </value>
         public ArgumentParser ArgumentParser { get; private set; }
 
+        /// <summary>
+        /// Gets the hosting environment.
+        /// </summary>
+        /// <value>
+        /// The hosting environment.
+        /// </value>
+        public IHostingEnvironment HostingEnvironment { get; }
+
         #endregion
 
         #region Constructor
@@ -63,6 +70,7 @@ namespace Paradigm.Services.CLI
         /// </summary>
         private ConsoleHost()
         {
+            this.HostingEnvironment = new ConsoleHostingEnvironment();
         }
 
         #endregion
@@ -113,11 +121,14 @@ namespace Paradigm.Services.CLI
         /// <param name="basePath">The base path.</param>
         /// <param name="optional">Whether the file is optional</param>
         /// <param name="reloadOnChange">Whether the configuration should be reloaded if the file changes</param>
+        /// <remarks>
+        /// By default the system will use the entry assembly location.
+        /// </remarks>
         /// <returns></returns>
         public ConsoleHost UseConfiguration(string fileName, string basePath = null, bool optional = false, bool reloadOnChange = true)
         {
             var builder = new ConfigurationBuilder()
-                .SetBasePath(basePath ?? Directory.GetCurrentDirectory())
+                .SetBasePath(basePath ?? this.HostingEnvironment.ContentRootPath)
                 .AddJsonFile(fileName, optional, reloadOnChange);
 
             this.ConfigurationRoot = builder.Build();
@@ -149,6 +160,7 @@ namespace Paradigm.Services.CLI
                 throw new Exception("The startup couldn't be created.");
 
             this.ServiceCollection = new ServiceCollection();
+            this.ServiceCollection.AddSingleton(this.HostingEnvironment);
 
             if (this.ArgumentParser?.Arguments != null)
                 this.ServiceCollection.AddSingleton(this.ArgumentParser.ArgumentsType, this.ArgumentParser.Arguments);
