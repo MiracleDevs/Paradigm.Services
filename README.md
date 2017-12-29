@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/MiracleDevs/Paradigm.Services.svg?branch=master)](https://travis-ci.org/MiracleDevs/Paradigm.Services)
 
 
-| Library    | Nuget | Install
+| Library    | NuGet | Install
 |-|-|-|
 | CLI | [![NuGet](https://img.shields.io/nuget/v/Nuget.Core.svg)](https://www.nuget.org/packages/Paradigm.Services.CLI/) | `Install-Package Paradigm.Services.CLI` |
 | DependencyInjection.Extensions | [![NuGet](https://img.shields.io/nuget/v/Nuget.Core.svg)](https://www.nuget.org/packages/Paradigm.Services.DependencyInjection.Extensions/) | `Install-Package Paradigm.Services.DependencyInjection.Extensions` |
@@ -23,11 +23,17 @@
 | WorkingTasks.ORM | [![NuGet](https://img.shields.io/nuget/v/Nuget.Core.svg)](https://www.nuget.org/packages/Paradigm.Services.WorkingTasks.ORM/) | `Install-Package Paradigm.Services.WorkingTasks.ORM` |
 
 # Paradigm.Services
-Base libraries for service and webapi projects, containing support for different data sources, state machines and more.
+Base libraries for service and web api projects, containing support for different data sources, state machines and more.
 
 
 Change log
 ---
+
+Version `2.0.18`
+- Updated to the latest version of the Paradigm.ORM.
+- Added ConsoleHostingEnvironment, and changed how the ConsoleHost behave.
+- Added base constructors for repositories.
+
 
 Version `2.0.17`
 - Updated to the latest version of the Paradigm.ORM.
