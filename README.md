@@ -29,6 +29,10 @@ Base libraries for service and web api projects, containing support for differen
 Change log
 ---
 
+Version `2.0.19`
+- Updated to the latest version of the Paradigm.ORM.
+
+
 Version `2.0.18`
 - Updated to the latest version of the Paradigm.ORM.
 - Added ConsoleHostingEnvironment, and changed how the ConsoleHost behave.
