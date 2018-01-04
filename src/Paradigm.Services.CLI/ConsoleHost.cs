@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,12 +15,12 @@ namespace Paradigm.Services.CLI
         #region Properties
 
         /// <summary>
-        /// Gets the startup program.
+        /// Gets the hosting environment.
         /// </summary>
         /// <value>
-        /// The startup program.
+        /// The hosting environment.
         /// </value>
-        public object Startup { get; private set; }
+        public IHostingEnvironment HostingEnvironment { get; }
 
         /// <summary>
         /// Gets the service collection.
@@ -27,7 +28,7 @@ namespace Paradigm.Services.CLI
         /// <value>
         /// The service collection.
         /// </value>
-        public IServiceCollection ServiceCollection { get; private set; }
+        public IServiceCollection ServiceCollection { get; }
 
         /// <summary>
         /// Gets the service provider.
@@ -36,6 +37,14 @@ namespace Paradigm.Services.CLI
         /// The service provider.
         /// </value>
         public IServiceProvider ServiceProvider { get; private set; }
+
+        /// <summary>
+        /// Gets the configuration builder.
+        /// </summary>
+        /// <value>
+        /// The configuration builder.
+        /// </value>
+        public IConfigurationBuilder ConfigurationBuilder { get; private set; }
 
         /// <summary>
         /// Gets the configuration root.
@@ -54,12 +63,36 @@ namespace Paradigm.Services.CLI
         public ArgumentParser ArgumentParser { get; private set; }
 
         /// <summary>
-        /// Gets the hosting environment.
+        /// Gets the startup program.
         /// </summary>
         /// <value>
-        /// The hosting environment.
+        /// The startup program.
         /// </value>
-        public IHostingEnvironment HostingEnvironment { get; }
+        public object Startup { get; private set; }
+
+        /// <summary>
+        /// Gets the startup program type.
+        /// </summary>
+        /// <value>
+        /// The startup program type.
+        /// </value>
+        public Type StartupType { get; private set; }
+
+        /// <summary>
+        /// Gets the error handler.
+        /// </summary>
+        /// <value>
+        /// The error handler.
+        /// </value>
+        public Action<Exception> ErrorHandler { get; private set; }
+
+        /// <summary>
+        /// Gets the exit handler.
+        /// </summary>
+        /// <value>
+        /// The exit handler.
+        /// </value>
+        public Action ExitHandler { get; private set; }
 
         #endregion
 
@@ -71,6 +104,8 @@ namespace Paradigm.Services.CLI
         private ConsoleHost()
         {
             this.HostingEnvironment = new ConsoleHostingEnvironment();
+            this.ServiceCollection = new ServiceCollection();
+            this.ServiceCollection.AddSingleton(this.HostingEnvironment);
         }
 
         #endregion
@@ -80,7 +115,7 @@ namespace Paradigm.Services.CLI
         /// <summary>
         /// Creates a new instance.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A refernece to the console host instance.</returns>
         public static ConsoleHost Create()
         {
             return new ConsoleHost();
@@ -91,66 +126,101 @@ namespace Paradigm.Services.CLI
         /// </summary>
         /// <typeparam name="T">A type decorated with the options</typeparam>
         /// <param name="args">The console line arguments arguments.</param>
-        /// <returns></returns>
-        public ConsoleHost ParseArguments<T>(string[] args) where T : class
+        /// <returns>A reference to the argument parser.</returns>
+        public ArgumentParser ParseArguments<T>(string[] args) where T : class
         {
             this.ArgumentParser = new ArgumentParser();
             this.ArgumentParser.ParseArguments<T>(args);
-            return this;
+
+            if (this.ArgumentParser?.Arguments != null)
+                this.ServiceCollection.AddSingleton(this.ArgumentParser.ArgumentsType, this.ArgumentParser.Arguments);
+
+            return this.ArgumentParser;
         }
 
         /// <summary>
-        /// Sets the console application version.
+        /// Uses the configuration.
         /// </summary>
-        /// <param name="shortVersion">The short version.</param>
-        /// <param name="longVersion">The long version.</param>
-        /// <returns></returns>
-        public ConsoleHost SetVersion(string shortVersion, string longVersion)
+        /// <returns>A reference to the configuration builder.</returns>
+        public IConfigurationBuilder UseConfiguration()
         {
-            if (this.ArgumentParser == null)
-                throw new Exception("Please first call the method ParseArguments.");
-
-            this.ArgumentParser.SetVersion(shortVersion, longVersion);
-            return this;
-        }
-
-        /// <summary>
-        /// Opens the configuration.
-        /// </summary>
-        /// <param name="fileName">Name of the file.</param>
-        /// <param name="basePath">The base path.</param>
-        /// <param name="optional">Whether the file is optional</param>
-        /// <param name="reloadOnChange">Whether the configuration should be reloaded if the file changes</param>
-        /// <remarks>
-        /// By default the system will use the entry assembly location.
-        /// </remarks>
-        /// <returns></returns>
-        public ConsoleHost UseConfiguration(string fileName, string basePath = null, bool optional = false, bool reloadOnChange = true)
-        {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(basePath ?? this.HostingEnvironment.ContentRootPath)
-                .AddJsonFile(fileName, optional, reloadOnChange);
-
-            this.ConfigurationRoot = builder.Build();
-
-            return this;
+            return this.ConfigurationBuilder = new ConfigurationBuilder().SetBasePath(this.HostingEnvironment.ContentRootPath);
         }
 
         /// <summary>
         /// Setups the startup program.
         /// </summary>
         /// <typeparam name="T">Type of the startup program.</typeparam>
-        /// <returns></returns>
-        /// <exception cref="System.Exception">The startup couldn't be created.</exception>
+        /// <returns>A reference to the console host.</returns>
         public ConsoleHost UseStartup<T>()
         {
-            var type = typeof(T);
-            var constructorInfo = type.GetConstructor(new[] { typeof(IConfigurationRoot) }) ??
-                                  type.GetConstructor(new[] { typeof(IConfiguration) }) ??
-                                  type.GetConstructor(new Type[] { });
+            this.StartupType = typeof(T);
+            return this;
+        }
+
+        /// <summary>
+        /// Sets an error handler at application domain level
+        /// </summary>
+        /// <param name="errorHandler">The error handler.</param>
+        /// <returns>A reference to the console host.</returns>
+        /// <exception cref="ArgumentNullException">errorHandler - The error handler can not be null.</exception>
+        public ConsoleHost HandleErrors(Action<Exception> errorHandler)
+        {
+            this.ErrorHandler = errorHandler ?? throw new ArgumentNullException(nameof(errorHandler), "The error handler can not be null.");
+            AppDomain.CurrentDomain.UnhandledException += (sender, args) => this.ErrorHandler(args.ExceptionObject as Exception);
+            return this;
+        }
+
+        /// <summary>
+        /// Sets an exit handler at application domain level.
+        /// </summary>
+        /// <param name="exitHandler">The exit handler.</param>
+        /// <returns>A reference to the console host.</returns>
+        /// <exception cref="ArgumentNullException">exitHandler - The exit handler can not be null.</exception>
+        public ConsoleHost HandleExit(Action exitHandler)
+        {
+            this.ExitHandler = exitHandler ?? throw new ArgumentNullException(nameof(exitHandler), "The exit handler can not be null.");
+            AppDomain.CurrentDomain.ProcessExit += (sender, args) => this.ExitHandler();
+            return this;
+        }
+
+        /// <summary>
+        /// Buidlds and run the specified program.
+        /// </summary>
+        /// <returns>A reference to the console host.</returns>
+        public ConsoleHost Build()
+        {
+            this.BuildConfiguration();
+            this.BuildStartup();
+            this.BuildServiceProvider();
+            this.RunStartup();
+
+            return this;
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        /// <summary>
+        /// Builds the configuration.
+        /// </summary>
+        private void BuildConfiguration()
+        {
+            this.ConfigurationRoot = this.ConfigurationBuilder?.Build();
+        }
+
+        /// <summary>
+        /// Builds the startup.
+        /// </summary>
+        private void BuildStartup()
+        {
+            var constructorInfo = this.StartupType.GetConstructor(new[] { typeof(IConfigurationRoot) }) ??
+                                  this.StartupType.GetConstructor(new[] { typeof(IConfiguration) }) ??
+                                  this.StartupType.GetConstructor(new Type[] { });
 
             if (constructorInfo == null)
-                throw new Exception($"Couldn't find a suitable constructor for the startup class '{type.Name}'.");
+                throw new Exception($"Couldn't find a suitable constructor for the startup class '{this.StartupType.Name}'.");
 
             this.Startup = constructorInfo.Invoke(constructorInfo.GetParameters().Any()
                 ? new object[] { this.ConfigurationRoot }
@@ -159,52 +229,52 @@ namespace Paradigm.Services.CLI
             if (this.Startup == null)
                 throw new Exception("The startup couldn't be created.");
 
-            this.ServiceCollection = new ServiceCollection();
-            this.ServiceCollection.AddSingleton(this.HostingEnvironment);
-
-            if (this.ArgumentParser?.Arguments != null)
-                this.ServiceCollection.AddSingleton(this.ArgumentParser.ArgumentsType, this.ArgumentParser.Arguments);
-
-            var configureMethodInfo = type.GetMethod("ConfigureServices", new[] { typeof(IServiceCollection) });
+            var configureMethodInfo = this.StartupType.GetMethod("ConfigureServices", new[] { typeof(IServiceCollection) });
             configureMethodInfo?.Invoke(this.Startup, new object[] { this.ServiceCollection });
-
-            return this;
         }
 
         /// <summary>
-        /// Runs the specified program.
+        /// Builds the service provider.
         /// </summary>
-        /// <param name="onError">Method called if an error is thrown.</param>
-        /// <returns>Execution status code.</returns>
-        public int Run(Action<Exception> onError = null)
+        private void BuildServiceProvider()
         {
-            try
+            this.ServiceProvider = this.ServiceCollection.BuildServiceProvider();
+        }
+
+        /// <summary>
+        /// Runs the startup.
+        /// </summary>
+        private void RunStartup()
+        {
+            var runMethodInfo = this.Startup.GetType().GetMethods(BindingFlags.Instance | BindingFlags.Public).FirstOrDefault(x => x.Name == "Run");
+
+            if (runMethodInfo == null)
+                throw new Exception($"Couldn't find a suitable run method for the startup class '{this.Startup.GetType().Name}'.");
+
+            if (runMethodInfo.ReturnType == typeof(Task))
             {
-                if(this.Startup == null)
-                    throw new Exception("The startup class couldn't be constructed and can not run.");
-
-                this.ServiceProvider = this.ServiceCollection.BuildServiceProvider();
-                var runMethodInfo = this.Startup.GetType().GetMethod("Run", new []{ typeof(IServiceProvider) });
-
-                if (runMethodInfo == null)
-                    throw new Exception($"Couldn't find a suitable run method for the startup class '{this.Startup.GetType().Name}'.");
-
-                if (runMethodInfo.ReturnType == typeof(Task))
-                {
-                    ((Task)runMethodInfo.Invoke(this.Startup, new object[] { this.ServiceProvider })).Wait();
-                }
-                else
-                {
-                    runMethodInfo.Invoke(this.Startup, new object[] { this.ServiceProvider });
-                }
-
-                return 0;
+                ((Task)runMethodInfo.Invoke(this.Startup, this.ResolveParameters(runMethodInfo.GetParameters()))).Wait();
             }
-            catch (Exception ex)
+            else
             {
-                onError?.Invoke(ex);
-                return -1;
+                runMethodInfo.Invoke(this.Startup, this.ResolveParameters(runMethodInfo.GetParameters()));
             }
+        }
+
+        private object[] ResolveParameters(ParameterInfo[] parameters)
+        {
+            if (parameters == null || parameters.Length == 0)
+                return new object[0];
+
+            var result = new object[parameters.Length];
+
+            for (var index = 0; index < parameters.Length; index++)
+            {
+                var parameter = parameters[index];
+                result[index] = this.ServiceProvider.GetService(parameter.ParameterType);
+            }
+
+            return result;
         }
 
         #endregion

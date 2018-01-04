@@ -29,6 +29,22 @@ Base libraries for service and web api projects, containing support for differen
 Change log
 ---
 
+Version `2.1.0`
+- Updated how the ConsoleHost handle the building and run processes:
+  - The run method was changed by a build method.
+  - UseConfiguration now returns a reference to the IConfigurationBuilder. This will allow to
+    use different configuration extensions like `AddUserSecrets` or `AddCommandLine`.
+  - ParseArguments now returns a reference to the ArgumentParser.
+  - Removed `SerVersion` from the ConsoleHost, now the setting the version will be done
+    from the ArgumentParser, because it's a functionality related to that class.
+  - Added a new method to setup a global exception handling.
+  - Added a new method to setup an exit handler.
+  - When searching for a Run method (both sync and async) the host will
+    try to resolve parameters with the service provider, so the Run method can now
+    have as many parameters as required, similar to the web startup.
+- Updated tests.
+
+
 Version `2.0.19`
 - Updated to the latest version of the Paradigm.ORM.
 

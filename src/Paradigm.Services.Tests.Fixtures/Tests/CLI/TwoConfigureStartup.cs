@@ -26,5 +26,10 @@ namespace Paradigm.Services.Tests.Fixtures.Tests.CLI
         {
             this.ServiceCollection = serviceCollection;
         }
+
+        public void Run(IServiceProvider serviceProvider)
+        {
+            this.ServiceProvider = serviceProvider;
+        }
     }
 }
