@@ -29,6 +29,10 @@ Base libraries for service and web api projects, containing support for differen
 Change log
 ---
 
+Version `2.1.1`
+- Updated nuget dependencies.
+
+
 Version `2.1.0`
 - Updated how the ConsoleHost handle the building and run processes:
   - The run method was changed by a build method.
