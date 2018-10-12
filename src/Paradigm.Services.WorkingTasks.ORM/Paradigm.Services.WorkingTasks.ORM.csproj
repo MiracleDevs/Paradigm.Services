@@ -17,7 +17,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Paradigm.ORM.Data" Version="2.2.4" />
+    <PackageReference Include="Paradigm.ORM.Data" Version="2.3.0" />
   </ItemGroup>
 
   <ItemGroup>

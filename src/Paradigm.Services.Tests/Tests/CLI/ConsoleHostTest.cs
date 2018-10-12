@@ -57,7 +57,7 @@ namespace Paradigm.Services.Tests.Tests.CLI
         [TestCase]
         public void ShouldFailIfNoSuitableConstructor()
         {
-            ConsoleHost.Create().Invoking(x => x.UseStartup<PrivateStartup>().Build()).ShouldThrow<Exception>();
+            ConsoleHost.Create().Invoking(x => x.UseStartup<PrivateStartup>().Build()).Should().Throw<Exception>();
         }
 
         [TestCase]
@@ -117,13 +117,13 @@ namespace Paradigm.Services.Tests.Tests.CLI
         [TestCase]
         public void ShouldntRunIfStartupWasntSetup()
         {
-            ConsoleHost.Create().Invoking(x => x.Build()).ShouldThrow<Exception>();
+            ConsoleHost.Create().Invoking(x => x.Build()).Should().Throw<Exception>();
         }
 
         [TestCase]
         public void ShouldNotRunIfNoRunMethodPresent()
         {
-            ConsoleHost.Create().UseStartup<EmptyStartup>().Invoking(x => x.Build()).ShouldThrow<Exception>();
+            ConsoleHost.Create().UseStartup<EmptyStartup>().Invoking(x => x.Build()).Should().Throw<Exception>();
         }
 
         [TestCase]
