@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -115,7 +116,7 @@ namespace Paradigm.Services.CLI
         /// <summary>
         /// Creates a new instance.
         /// </summary>
-        /// <returns>A refernece to the console host instance.</returns>
+        /// <returns>A reference to the console host instance.</returns>
         public static ConsoleHost Create()
         {
             return new ConsoleHost();
@@ -168,6 +169,7 @@ namespace Paradigm.Services.CLI
         {
             this.ErrorHandler = errorHandler ?? throw new ArgumentNullException(nameof(errorHandler), "The error handler can not be null.");
             AppDomain.CurrentDomain.UnhandledException += (sender, args) => this.ErrorHandler(args.ExceptionObject as Exception);
+            TaskScheduler.UnobservedTaskException += (sender, args) => this.ErrorHandler(args.Exception);
             return this;
         }
 
@@ -185,7 +187,7 @@ namespace Paradigm.Services.CLI
         }
 
         /// <summary>
-        /// Buidlds and run the specified program.
+        /// Builds and run the specified program.
         /// </summary>
         /// <returns>A reference to the console host.</returns>
         public ConsoleHost Build()
@@ -261,14 +263,14 @@ namespace Paradigm.Services.CLI
             }
         }
 
-        private object[] ResolveParameters(ParameterInfo[] parameters)
+        private object[] ResolveParameters(IReadOnlyList<ParameterInfo> parameters)
         {
-            if (parameters == null || parameters.Length == 0)
+            if (parameters == null || parameters.Count == 0)
                 return new object[0];
 
-            var result = new object[parameters.Length];
+            var result = new object[parameters.Count];
 
-            for (var index = 0; index < parameters.Length; index++)
+            for (var index = 0; index < parameters.Count; index++)
             {
                 var parameter = parameters[index];
                 result[index] = this.ServiceProvider.GetService(parameter.ParameterType);
