@@ -29,6 +29,11 @@ Base libraries for service and web api projects, containing support for differen
 Change log
 ---
 
+Version `2.1.2`
+- Updated nuget dependencies.
+- The ConsoleHost will report errors from the TaskScheduler.
+
+
 Version `2.1.1`
 - Updated nuget dependencies.
 
