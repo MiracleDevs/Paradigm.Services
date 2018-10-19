@@ -28,6 +28,9 @@ Base libraries for service and web api projects, containing support for differen
 
 Change log
 ---
+Version `2.1.3`
+- Updated nuget dependencies.
+
 
 Version `2.1.2`
 - Updated nuget dependencies.
