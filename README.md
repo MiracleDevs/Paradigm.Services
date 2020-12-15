@@ -1,26 +1,25 @@
-[![Build Status](https://travis-ci.org/MiracleDevs/Paradigm.Services.svg?branch=master)](https://travis-ci.org/MiracleDevs/Paradigm.Services)
-
+[![Build Status](https://github.com/MiracleDevs/Paradigm.Services/workflows/Paradigm%20Services/badge.svg)](https://github.com/MiracleDevs/Paradigm.Services/actions)
 
 | Library    | NuGet | Install
 |-|-|-|
-| CLI | [![NuGet](https://img.shields.io/nuget/v/Nuget.Core.svg)](https://www.nuget.org/packages/Paradigm.Services.CLI/) | `Install-Package Paradigm.Services.CLI` |
-| DependencyInjection.Extensions | [![NuGet](https://img.shields.io/nuget/v/Nuget.Core.svg)](https://www.nuget.org/packages/Paradigm.Services.DependencyInjection.Extensions/) | `Install-Package Paradigm.Services.DependencyInjection.Extensions` |
-| DependencyInjection.Extensions.ORM | [![NuGet](https://img.shields.io/nuget/v/Nuget.Core.svg)](https://www.nuget.org/packages/Paradigm.Services.DependencyInjection.Extensions.ORM/) | `Install-Package Paradigm.Services.DependencyInjection.Extensions.ORM` |
-| Mapping.Extensions | [![NuGet](https://img.shields.io/nuget/v/Nuget.Core.svg)](https://www.nuget.org/packages/Paradigm.Services.Mapping.Extensions/) | `Install-Package Paradigm.Services.Mapping.Extensions` |
-| Domain | [![NuGet](https://img.shields.io/nuget/v/Nuget.Core.svg)](https://www.nuget.org/packages/Paradigm.Services.Domain/) | `Install-Package Paradigm.Services.Domain` |
-| Exceptions | [![NuGet](https://img.shields.io/nuget/v/Nuget.Core.svg)](https://www.nuget.org/packages/Paradigm.Services.Exceptions/) | `Install-Package Paradigm.Services.Exceptions` |
-| Exceptions.SqlServer | [![NuGet](https://img.shields.io/nuget/v/Nuget.Core.svg)](https://www.nuget.org/packages/Paradigm.Services.Exceptions.SqlServer/) | `Install-Package Paradigm.Services.Exceptions.SqlServer` |
-| Interfaces | [![NuGet](https://img.shields.io/nuget/v/Nuget.Core.svg)](https://www.nuget.org/packages/Paradigm.Services.Interfaces/) | `Install-Package Paradigm.Services.Interfaces` |
-| Mvc | [![NuGet](https://img.shields.io/nuget/v/Nuget.Core.svg)](https://www.nuget.org/packages/Paradigm.Services.Mvc/) | `Install-Package Paradigm.Services.Mvc` |
-| Providers | [![NuGet](https://img.shields.io/nuget/v/Nuget.Core.svg)](https://www.nuget.org/packages/Paradigm.Services.Providers/) | `Install-Package Paradigm.Services.Providers` |
-| Repositories | [![NuGet](https://img.shields.io/nuget/v/Nuget.Core.svg)](https://www.nuget.org/packages/Paradigm.Services.Repositories/) | `Install-Package Paradigm.Services.Repositories` |
-| StateMachines | [![NuGet](https://img.shields.io/nuget/v/Nuget.Core.svg)](https://www.nuget.org/packages/Paradigm.Services.StateMachines/) | `Install-Package Paradigm.Services.StateMachines` |
-| WorkingTasks | [![NuGet](https://img.shields.io/nuget/v/Nuget.Core.svg)](https://www.nuget.org/packages/Paradigm.Services.WorkingTasks/) | `Install-Package Paradigm.Services.WorkingTasks` |
-| Repositories.EntityFramework | [![NuGet](https://img.shields.io/nuget/v/Nuget.Core.svg)](https://www.nuget.org/packages/Paradigm.Services.Repositories.EntityFramework/) | `Install-Package Paradigm.Services.Repositories.EntityFramework` |
-| WorkingTasks.EntityFramework | [![NuGet](https://img.shields.io/nuget/v/Nuget.Core.svg)](https://www.nuget.org/packages/Paradigm.Services.WorkingTasks.EntityFramework/) | `Install-Package Paradigm.Services.WorkingTasks.EntityFramework` |
-| Mvc.ORM | [![NuGet](https://img.shields.io/nuget/v/Nuget.Core.svg)](https://www.nuget.org/packages/Paradigm.Services.Mvc.ORM/) | `Install-Package Paradigm.Services.Mvc.ORM` |
-| Repositories.ORM | [![NuGet](https://img.shields.io/nuget/v/Nuget.Core.svg)](https://www.nuget.org/packages/Paradigm.Services.Repositories.ORM/) | `Install-Package Paradigm.Services.Repositories.ORM` |
-| WorkingTasks.ORM | [![NuGet](https://img.shields.io/nuget/v/Nuget.Core.svg)](https://www.nuget.org/packages/Paradigm.Services.WorkingTasks.ORM/) | `Install-Package Paradigm.Services.WorkingTasks.ORM` |
+| CLI                                   | [![NuGet](https://img.shields.io/nuget/v/Paradigm.Services.CLI.svg)](https://www.nuget.org/packages/Paradigm.Services.CLI/) | `Install-Package Paradigm.Services.CLI` |
+| DependencyInjection.Extensions        | [![NuGet](https://img.shields.io/nuget/v/Paradigm.Services.DependencyInjection.Extensions.svg)](https://www.nuget.org/packages/Paradigm.Services.DependencyInjection.Extensions/) | `Install-Package Paradigm.Services.DependencyInjection.Extensions`  |
+| DependencyInjection.Extensions.ORM    | [![NuGet](https://img.shields.io/nuget/v/Paradigm.Services.DependencyInjection.Extensions.ORM.svg)](https://www.nuget.org/packages/Paradigm.Services.DependencyInjection.Extensions.ORM/) | `Install-Package Paradigm.Services.DependencyInjection.Extensions.ORM`|
+| Mapping.Extensions                    | [![NuGet](https://img.shields.io/nuget/v/Paradigm.Services.Mapping.Extensions.svg)](https://www.nuget.org/packages/Paradigm.Services.Mapping.Extensions/) | `Install-Package Paradigm.Services.Mapping.Extensions` |
+| Domain                                | [![NuGet](https://img.shields.io/nuget/v/Paradigm.Services.Domain.svg)](https://www.nuget.org/packages/Paradigm.Services.Domain/) | `Install-Package Paradigm.Services.Domain` |
+| Exceptions                            | [![NuGet](https://img.shields.io/nuget/v/Paradigm.Services.Exceptions.svg)](https://www.nuget.org/packages/Paradigm.Services.Exceptions/) | `Install-Package Paradigm.Services.Exceptions` |
+| Exceptions.SqlServer                  | [![NuGet](https://img.shields.io/nuget/v/Paradigm.Services.Exceptions.SqlServer.svg)](https://www.nuget.org/packages/Paradigm.Services.Exceptions.SqlServer/) | `Install-Package Paradigm.Services.Exceptions.SqlServer` |
+| Interfaces                            | [![NuGet](https://img.shields.io/nuget/v/Paradigm.Services.Interfaces.svg)](https://www.nuget.org/packages/Paradigm.Services.Interfaces/) | `Install-Package Paradigm.Services.Interfaces` |
+| Mvc                                   | [![NuGet](https://img.shields.io/nuget/v/Paradigm.Services.Mvc.svg)](https://www.nuget.org/packages/Paradigm.Services.Mvc/) | `Install-Package Paradigm.Services.Mvc` |
+| Providers                             | [![NuGet](https://img.shields.io/nuget/v/Paradigm.Services.Providers.svg)](https://www.nuget.org/packages/Paradigm.Services.Providers/) | `Install-Package Paradigm.Services.Providers` |
+| Repositories                          | [![NuGet](https://img.shields.io/nuget/v/Paradigm.Services.Repositories.svg)](https://www.nuget.org/packages/Paradigm.Services.Repositories/) | `Install-Package Paradigm.Services.Repositories` |
+| StateMachines                         | [![NuGet](https://img.shields.io/nuget/v/Paradigm.Services.StateMachines.svg)](https://www.nuget.org/packages/Paradigm.Services.StateMachines/) | `Install-Package Paradigm.Services.StateMachines` |
+| WorkingTasks                          | [![NuGet](https://img.shields.io/nuget/v/Paradigm.Services.WorkingTasks.svg)](https://www.nuget.org/packages/Paradigm.Services.WorkingTasks/) | `Install-Package Paradigm.Services.WorkingTasks` |
+| Repositories.EntityFramework          | [![NuGet](https://img.shields.io/nuget/v/Paradigm.Services.Repositories.EntityFramework.svg)](https://www.nuget.org/packages/Paradigm.Services.Repositories.EntityFramework/) | `Install-Package Paradigm.Services.Repositories.EntityFramework` |
+| WorkingTasks.EntityFramework          | [![NuGet](https://img.shields.io/nuget/v/Paradigm.Services.WorkingTasks.EntityFramework.svg)](https://www.nuget.org/packages/Paradigm.Services.WorkingTasks.EntityFramework/) | `Install-Package Paradigm.Services.WorkingTasks.EntityFramework` |
+| Mvc.ORM                               | [![NuGet](https://img.shields.io/nuget/v/Paradigm.Services.Mvc.ORM.svg)](https://www.nuget.org/packages/Paradigm.Services.Mvc.ORM/) | `Install-Package Paradigm.Services.Mvc.ORM` |
+| Repositories.ORM                      | [![NuGet](https://img.shields.io/nuget/v/Paradigm.Services.Repositories.ORM.svg)](https://www.nuget.org/packages/Paradigm.Services.Repositories.ORM/) | `Install-Package Paradigm.Services.Repositories.ORM` |
+| WorkingTasks.ORM                      | [![NuGet](https://img.shields.io/nuget/v/Paradigm.Services.WorkingTasks.ORM.svg)](https://www.nuget.org/packages/Paradigm.Services.WorkingTasks.ORM/) | `Install-Package Paradigm.Services.WorkingTasks.ORM` |
 
 # Paradigm.Services
 Base libraries for service and web api projects, containing support for different data sources, state machines and more.
@@ -28,6 +27,12 @@ Base libraries for service and web api projects, containing support for differen
 
 Change log
 ---
+
+Version `2.2.0`
+- Updated nuget dependencies.
+- Updated projects to .NET 5.0 and Standard 2.1.0.
+
+
 Version `2.1.3`
 - Updated nuget dependencies.
 
