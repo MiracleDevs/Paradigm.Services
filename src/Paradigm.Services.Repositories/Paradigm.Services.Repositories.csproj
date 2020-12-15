@@ -1,26 +1,30 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Copyright>Miracle Devs</Copyright>
-    <PackageProjectUrl>http://www.paradigm.net.co/</PackageProjectUrl>
+    <PackageProjectUrl>https://www.paradigm.net.co/</PackageProjectUrl>
     <Description>Contains the main interfaces to work with repositories. To work with a specific orm, choose one of the following libraries:
 - Paradigm.Services.Repositories.EntityFramework
 - Paradigm.Services.Repositories.Dapper
 - Paradigm.Services.Repositories.ORM</Description>
     <Authors>Miracle Devs</Authors>
     <Company>Miracle Devs</Company>
-    <PackageLicenseUrl>https://github.com/MiracleDevs/Paradigm.Services/blob/master/LICENSE</PackageLicenseUrl>
-    <PackageIconUrl>https://avatars2.githubusercontent.com/u/8192926</PackageIconUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageIcon>icon.png</PackageIcon>
     <RepositoryUrl>https://github.com/MiracleDevs/Paradigm.Services.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <Version>2.1.3</Version>
+    <Version>2.2.0</Version>
     <Product>Paradigm Services</Product>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Paradigm.Services.Domain\Paradigm.Services.Domain.csproj" />
   </ItemGroup>
+
+    <ItemGroup>
+        <None Include="icon.png" Pack="true" PackagePath="" />
+    </ItemGroup>
 
 </Project>

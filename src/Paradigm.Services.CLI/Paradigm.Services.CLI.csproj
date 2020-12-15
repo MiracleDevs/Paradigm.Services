@@ -1,18 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Copyright>Miracle Devs</Copyright>
-    <PackageProjectUrl>http://www.paradigm.net.co/</PackageProjectUrl>
+    <PackageProjectUrl>https://www.paradigm.net.co/</PackageProjectUrl>
     <Description>Base library for command line applications and services.</Description>
     <Authors>Miracle Devs</Authors>
     <Company>Miracle Devs</Company>
-    <PackageLicenseUrl>https://github.com/MiracleDevs/Paradigm.Services/blob/master/LICENSE</PackageLicenseUrl>
-    <PackageIconUrl>https://avatars2.githubusercontent.com/u/8192926</PackageIconUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageIcon>icon.png</PackageIcon>
     <RepositoryUrl>https://github.com/MiracleDevs/Paradigm.Services.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <Version>2.1.3</Version>
+    <Version>2.2.0</Version>
     <Product>Paradigm Services</Product>
   </PropertyGroup>
 
@@ -38,5 +38,9 @@
     <ProjectReference Include="..\Paradigm.Services.Repositories\Paradigm.Services.Repositories.csproj" />
     <ProjectReference Include="..\Paradigm.Services.WorkingTasks\Paradigm.Services.WorkingTasks.csproj" />
   </ItemGroup>
+
+    <ItemGroup>
+        <None Include="icon.png" Pack="true" PackagePath="" />
+    </ItemGroup>
 
 </Project>
