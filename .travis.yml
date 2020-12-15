@@ -1,9 +1,0 @@
-language: csharp
-dist: trusty
-dotnet: 2.1.300
-install:
-- dotnet restore ./src/Paradigm.Services.sln
-script:
-- dotnet build ./src/Paradigm.Services.sln
-- dotnet test ./src/Paradigm.Services.Tests/Paradigm.Services.Tests.csproj
-
