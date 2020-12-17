@@ -28,6 +28,11 @@ Base libraries for service and web api projects, containing support for differen
 Change log
 ---
 
+Version `2.3.0`
+- Updated `Paradigm.Services.MVC`, `Paradigm.Services.MVC.ORM` and the test fixture project to be .net 5.0 class libraries,
+  instead of .net standard libraries.
+
+
 Version `2.2.0`
 - Updated nuget dependencies.
 - Updated projects to .NET 5.0 and Standard 2.1.0.
